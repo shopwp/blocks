@@ -1,9 +1,9 @@
-# Components
+# 💽 ShopWP Gutenberg Blocks
 
-React component library for ShopWP
+Gutenberg Blocks package for ShopWP
 
 ## Install
 
 ```
-npm install Components
+npm install @shopwp/blocks
 ```
