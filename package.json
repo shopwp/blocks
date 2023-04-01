@@ -19,7 +19,7 @@
     "ecommerce",
     "woocommerce"
   ],
-  "peerDependencies": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "use-debounce": "^9.0.3"
+  }
 }
