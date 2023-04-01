@@ -2,3 +2,8 @@ export { default as registerBlockProducts } from "./src/products"
 export { default as registerBlockSingleProduct } from "./src/single-product"
 export { default as registerBlockBuyButton } from "./src/buy-button"
 export { default as Icon } from "./src/_icons"
+
+export {
+  default as useBlockState,
+  default as useBlockDispatch,
+} from "./src/_state/hooks"
