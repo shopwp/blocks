@@ -1,4 +1,4 @@
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function InfiniteScrollOffset({ state, dispatch }) {
   const { useEffect, useState } = wp.element

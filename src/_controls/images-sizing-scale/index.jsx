@@ -1,4 +1,4 @@
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function ImagesSizingScale({ scale, toggle }) {
   const { SelectControl } = wp.components

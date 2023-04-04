@@ -1,5 +1,5 @@
 import FilterTextControl from "../_common/filter-text-control"
-import { useBlockState } from "BlockState"
+import { useBlockState } from "@shopwp/blocks"
 
 function Collection({ state, isLoading }) {
   const blockState = useBlockState()

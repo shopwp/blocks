@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { Shop } from "Components"
-import { encodeSettings, compareSettings } from "Common"
+import { Shop } from "@shopwp/components"
+import { encodeSettings, compareSettings } from "@shopwp/common"
 import { useBlockState } from "../_state/hooks"
 
 function BlockContent({ children }) {

@@ -5,7 +5,7 @@ import Vendor from "../vendor"
 import ProductType from "../product-type"
 import AvailableForSale from "../available-for-sale"
 import Connective from "../connective"
-import { useBlockState } from "BlockState"
+import { useBlockState } from "@shopwp/blocks"
 
 function FilteringControls({ settings, single = false }) {
   const blockState = useBlockState()

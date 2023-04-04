@@ -1,4 +1,4 @@
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function ShowPriceRange({ showPriceRange }) {
   const { ToggleControl } = wp.components

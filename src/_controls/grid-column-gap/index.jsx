@@ -1,5 +1,5 @@
 import { useDebounce } from "use-debounce"
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function GridColumnGap({ gridColumnGap }) {
   const { useEffect, useState } = wp.element

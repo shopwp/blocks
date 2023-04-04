@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function Reverse({ reverse, isLoading }) {
   const { CheckboxControl, Spinner } = wp.components

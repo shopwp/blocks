@@ -1,4 +1,4 @@
-import { encodeSettings, decodeSettings } from "Common"
+import { encodeSettings, decodeSettings } from "@shopwp/common"
 
 function getSavedBlockSettings(defaultSettings, settingsId) {
   var decodedAppliedSettings = decodeSettings(settingsId)

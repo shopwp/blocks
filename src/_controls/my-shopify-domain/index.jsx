@@ -1,5 +1,5 @@
 import { useDebounce } from "use-debounce"
-import { sanitizeDomainField } from "Common"
+import { sanitizeDomainField } from "@shopwp/common"
 
 function MyShopifyDomain({ state, dispatch }) {
   const { useEffect, useState, useRef } = wp.element

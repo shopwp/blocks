@@ -3,7 +3,7 @@ import GeneralControls from "../../_controls/_groups/general"
 import ButtonControls from "../../_controls/_groups/buy-button"
 import CheckoutControls from "../../_controls/_groups/checkout"
 import BlockControls from "../../_controls"
-import { useBlockState } from "BlockState"
+import { useBlockState } from "@shopwp/blocks"
 
 function BuyButtonControls() {
   const { PanelBody } = wp.components

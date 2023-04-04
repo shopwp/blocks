@@ -1,4 +1,4 @@
-import { Products } from "Components"
+import { Products } from "@shopwp/components"
 import BlockContent from "../../_content"
 
 function ProductsContent() {

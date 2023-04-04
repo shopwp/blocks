@@ -1,6 +1,6 @@
 import TextAreaDebounced from "../_common/text-area-debounced"
 import isBase64 from "is-base64"
-import { useBlockState } from "BlockState"
+import { useBlockState } from "@shopwp/blocks"
 
 function HtmlTemplate({ settings }) {
   const blockState = useBlockState()

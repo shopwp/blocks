@@ -1,4 +1,4 @@
-import { RootElement } from "Components"
+import { RootElement } from "@shopwp/components"
 
 function BlockRoot({ attributes }) {
   return (

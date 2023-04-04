@@ -1,4 +1,4 @@
-import { encodeSettings, buildQueryStringFromSelections } from "Common"
+import { encodeSettings, buildQueryStringFromSelections } from "@shopwp/common"
 import update from "immutability-helper"
 
 function querySettings() {

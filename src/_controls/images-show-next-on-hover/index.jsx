@@ -1,4 +1,4 @@
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function ImagesShowNextOnHover({ state, showZoom }) {
   const { ToggleControl } = wp.components

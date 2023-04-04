@@ -1,4 +1,4 @@
-import { useBlockState, useBlockDispatch } from "BlockState"
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function ProductsLinkTarget({ linkTarget, linkTo }) {
   const { SelectControl, Disabled } = wp.components
