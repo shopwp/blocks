@@ -1,6 +1,7 @@
 {
   "name": "@shopwp/blocks",
-  "version": "7.0.19",
+  "sideEffects": false,
+  "version": "7.1.0",
   "description": "Gutenberg Blocks for ShopWP.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +20,5 @@
     "ecommerce",
     "woocommerce"
   ],
-  "dependencies": {
-    "use-debounce": "^9.0.3"
-  }
+  "dependencies": {}
 }

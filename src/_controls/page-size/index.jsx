@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 
 function PageSize({ pageSize, isLoading }) {
   const { useEffect, useState, useRef } = wp.element
   const { RangeControl, Spinner } = wp.components
   const [localVal, setLocalVal] = useState(pageSize)
-  const [debouncedValue] = useDebounce(localVal, 150)
+  const debouncedValue = useDebounce(localVal, 150)
   const isFirstRender = useRef(true)
   const blockDispatch = useBlockDispatch()
   const blockState = useBlockState()

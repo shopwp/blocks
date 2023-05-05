@@ -1,10 +1,10 @@
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 
 function NoResultsText({ state, dispatch }) {
   const { useEffect, useState, useRef } = wp.element
   const { TextControl } = wp.components
   const [localVal, setLocalVal] = useState(state.settings.noResultsText)
-  const [debouncedValue] = useDebounce(localVal, 250)
+  const debouncedValue = useDebounce(localVal, 250)
   const isFirstRender = useRef(true)
 
   function onChange(newVal) {

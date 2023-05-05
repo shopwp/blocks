@@ -1,7 +1,5 @@
-import compact from "lodash/compact"
-import map from "lodash/map"
-import isEmpty from "lodash/isEmpty"
-import isString from "lodash/isString"
+import compact from "lodash-es/compact"
+import isEmpty from "lodash-es/isEmpty"
 
 function defaultColors(blockState) {
   return [
@@ -24,7 +22,7 @@ function convertValuesToString(vals) {
     return ""
   }
 
-  if (isString(vals)) {
+  if (typeof vals === "string") {
     return vals
   }
 
@@ -42,7 +40,7 @@ function removeEmptyValues(stringSelection) {
 
   var stuff = compact(splitSelection(stringSelection))
 
-  var final = map(stuff, (val) => val.trim())
+  var final = stuff.map((val) => val.trim())
 
   return compact(final)
 }

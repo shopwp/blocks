@@ -1,10 +1,10 @@
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 
 function StorefrontAccessToken({ state, dispatch }) {
   const { useEffect, useState, useRef } = wp.element
   const { TextControl } = wp.components
   const [val, setVal] = useState(getCachedValue())
-  const [debouncedValue] = useDebounce(val, 250)
+  const debouncedValue = useDebounce(val, 250)
   const isFirstRender = useRef(true)
 
   function getCachedValue() {

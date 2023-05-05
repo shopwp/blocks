@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { convertValuesToString, removeEmptyValues } from "./"
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 import { useBlockDispatch } from "../../_state/hooks"
 
 function FilterTextControl({
@@ -16,7 +16,7 @@ function FilterTextControl({
   const { useEffect, useState, useRef } = wp.element
   const { TextControl, Spinner } = wp.components
   const [localVal, setLocalVal] = useState(convertValuesToString(state))
-  const [debouncedValue] = useDebounce(localVal, 250)
+  const debouncedValue = useDebounce(localVal, 250)
   const isFirstRender = useRef(true)
   const [isTouched, setIsTouched] = useState(false)
   const dispatch = useBlockDispatch()

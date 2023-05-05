@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import without from "lodash/without"
+import without from "lodash-es/without"
 import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function Excludes({ excludes }) {

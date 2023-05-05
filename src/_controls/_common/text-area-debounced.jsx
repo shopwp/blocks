@@ -1,4 +1,4 @@
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 import { useBlockDispatch } from "../../_state/hooks"
 
 function TextAreaDebounced({
@@ -12,7 +12,7 @@ function TextAreaDebounced({
   const { useEffect, useState, useRef } = wp.element
   const { TextareaControl } = wp.components
   const [localVal, setLocalVal] = useState(defaultState)
-  const [debouncedValue] = useDebounce(localVal, 300)
+  const debouncedValue = useDebounce(localVal, 300)
   const isFirstRender = useRef(true)
   const dispatch = useBlockDispatch()
 

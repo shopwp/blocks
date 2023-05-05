@@ -1,4 +1,4 @@
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function GridColumnGap({ gridColumnGap }) {
@@ -9,7 +9,7 @@ function GridColumnGap({ gridColumnGap }) {
 
     return parseInt(parts[0])
   })
-  const [debouncedValue] = useDebounce(localVal, 50)
+  const debouncedValue = useDebounce(localVal, 50)
   const blockDispatch = useBlockDispatch()
   const blockState = useBlockState()
 

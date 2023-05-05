@@ -1,11 +1,11 @@
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 import { sanitizeDomainField } from "@shopwp/common"
 
 function MyShopifyDomain({ state, dispatch }) {
   const { useEffect, useState, useRef } = wp.element
   const { TextControl } = wp.components
   const [val, setVal] = useState(getCachedValue())
-  const [debouncedValue] = useDebounce(val, 50)
+  const debouncedValue = useDebounce(val, 50)
   const isFirstRender = useRef(true)
 
   function getCachedValue() {

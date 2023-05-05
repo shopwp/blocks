@@ -1,11 +1,11 @@
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 
 function FontSizePickerControl({ fontSize, defaultValue, label, settingName }) {
   const { useEffect, useState, useRef } = wp.element
   const { FontSizePicker, BaseControl } = wp.components
   const [localVal, setLocalVal] = useState(getVal())
-  const [debouncedValue] = useDebounce(localVal, 10)
+  const debouncedValue = useDebounce(localVal, 10)
   const isFirstRender = useRef(true)
   const dispatch = useBlockDispatch()
   const blockState = useBlockState()
