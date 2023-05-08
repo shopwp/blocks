@@ -1,5 +1,6 @@
 import { encodeSettings, buildQueryStringFromSelections } from "@shopwp/common"
 import update from "immutability-helper"
+import { rSet, rErr } from "@shopwp/common"
 
 function querySettings() {
   return [
@@ -131,17 +132,11 @@ function BlockReducer(state, action) {
     }
 
     case "SET_NOTICE": {
-      return {
-        ...state,
-        notice: update(state.notice, { $set: action.payload }),
-      }
+      return rSet("notice", action, state)
     }
 
     case "SET_PAYLOAD": {
-      return {
-        ...state,
-        payload: update(state.payload, { $set: action.payload }),
-      }
+      return rSet("payload", action, state)
     }
 
     case "APPEND_PAYLOAD": {
@@ -152,17 +147,11 @@ function BlockReducer(state, action) {
     }
 
     case "SET_QUERY_TYPE": {
-      return {
-        ...state,
-        queryType: update(state.queryType, { $set: action.payload }),
-      }
+      return rSet("queryType", action, state)
     }
 
     case "SET_IS_LOADING": {
-      return {
-        ...state,
-        isLoading: update(state.isLoading, { $set: action.payload }),
-      }
+      return rSet("isLoading", action, state)
     }
 
     case "SET_CURSOR": {
@@ -184,34 +173,19 @@ function BlockReducer(state, action) {
     }
 
     case "SET_HAS_NEXT_PAGE": {
-      return {
-        ...state,
-        hasNextPage: update(state.hasNextPage, {
-          $set: action.payload,
-        }),
-      }
+      return rSet("hasNextPage", action, state)
     }
 
     case "SET_HAS_PREVIOUS_PAGE": {
-      return {
-        ...state,
-        hasPreviousPage: update(state.hasPreviousPage, {
-          $set: action.payload,
-        }),
-      }
+      return rSet("hasPreviousPage", action, state)
     }
 
     case "SET_COLLECTION_TITLES": {
-      return {
-        ...state,
-        collectionTitles: update(state.collectionTitles, {
-          $set: action.payload,
-        }),
-      }
+      return rSet("collectionTitles", action, state)
     }
 
     default: {
-      throw new Error(`Unhandled action type: ${action.type} in BlockReducer`)
+      rErr(action, "Block")
     }
   }
 }
