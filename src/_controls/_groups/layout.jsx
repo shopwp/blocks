@@ -1,18 +1,63 @@
-import Excludes from "../excludes"
-import FullWidth from "../full-width"
-import AlignHeight from "../align-height"
-import ItemsPerRow from "../items-per-row"
-import GridColumnGap from "../grid-column-gap"
-import Carousel from "../carousel"
-import CarouselDots from "../carousel-dots"
-import CarouselInfinite from "../carousel-infinite"
-import CarouselSpeed from "../carousel-speed"
-import CarouselSlidesToShow from "../carousel-slides-to-show"
-import CarouselSlidesToScroll from "../carousel-slides-to-scroll"
+const Excludes = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlExcludes-admin' */ "../excludes")
+)
+
+const FullWidth = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlFullWidth-admin' */ "../full-width")
+)
+
+const AlignHeight = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlAlignHeight-admin' */ "../align-height")
+)
+
+const ItemsPerRow = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlItemsPerRow-admin' */ "../items-per-row")
+)
+
+const GridColumnGap = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ControlGridColumnGap-admin' */ "../grid-column-gap"
+  )
+)
+
+const Carousel = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlCarousel-admin' */ "../carousel")
+)
+
+const CarouselDots = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlCarouselDots-admin' */ "../carousel-dots")
+)
+
+const CarouselInfinite = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ControlCarouselInfinite-admin' */ "../carousel-infinite"
+  )
+)
+
+const CarouselSpeed = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ControlCarouselSpeed-admin' */ "../carousel-speed"
+  )
+)
+
+const CarouselSlidesToShow = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ControlCarouselSlidesToShow-admin' */ "../carousel-slides-to-show"
+  )
+)
+
+const CarouselSlidesToScroll = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ControlCarouselSlidesToScroll-admin' */ "../carousel-slides-to-scroll"
+  )
+)
 
 function LayoutControls({ settings, isSingle = false }) {
+  const { Suspense } = wp.element
+  const { Spinner } = wp.components
+
   return (
-    <>
+    <Suspense fallback={<Spinner />}>
       {!isSingle && <ItemsPerRow itemsPerRow={settings.itemsPerRow} />}
       <Excludes excludes={settings.excludes} />
       {!isSingle && <GridColumnGap gridColumnGap={settings.gridColumnGap} />}
@@ -34,7 +79,7 @@ function LayoutControls({ settings, isSingle = false }) {
       {settings.carousel && !isSingle && (
         <CarouselSlidesToScroll slides={settings.carouselSlidesToScroll} />
       )}
-    </>
+    </Suspense>
   )
 }
 

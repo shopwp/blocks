@@ -114,11 +114,11 @@ function FilterTextControl({
 
   return (
     <div css={filterWrapCSS}>
-      {isLoading && isTouched && (
+      {isLoading && isTouched ? (
         <div css={spinnerStyles}>
           <Spinner />
         </div>
-      )}
+      ) : null}
 
       <TextControl
         label={label}

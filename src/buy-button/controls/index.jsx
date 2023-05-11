@@ -12,35 +12,19 @@ function BuyButtonControls() {
 
   return (
     <BlockControls>
-      <PanelBody
-        title={t.l.filtering}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.filtering} initialOpen={false}>
         <FilteringControls settings={settings} single={true} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.general}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.general} initialOpen={false}>
         <GeneralControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.buyButton}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.buyButton} initialOpen={false}>
         <ButtonControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.checkout}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.checkout} initialOpen={false}>
         <CheckoutControls settings={settings} />
       </PanelBody>
     </BlockControls>

@@ -20,99 +20,51 @@ function ProductsControls() {
 
   return (
     <BlockControls>
-      <PanelBody
-        title={t.l.filtering}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.filtering} initialOpen={false}>
         <FilteringControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.sorting}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.sorting} initialOpen={false}>
         <SortingControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.pagination}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.pagination} initialOpen={false}>
         <PaginationControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.general}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.general} initialOpen={false}>
         <GeneralControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.layout}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.layout} initialOpen={false}>
         <LayoutControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.title}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.title} initialOpen={false}>
         <TitleControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.description}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.description} initialOpen={false}>
         <DescriptionControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.pricing}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.pricing} initialOpen={false}>
         <PricingControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.images}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.images} initialOpen={false}>
         <ImagesControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.buyButton}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.buyButton} initialOpen={false}>
         <ButtonControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.l.checkout}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.l.checkout} initialOpen={false}>
         <CheckoutControls settings={settings} />
       </PanelBody>
 
-      <PanelBody
-        title={t.a.template}
-        initialOpen={false}
-        className="wps-panel-body"
-      >
+      <PanelBody title={t.a.template} initialOpen={false}>
         <TemplateControls settings={settings} />
       </PanelBody>
     </BlockControls>

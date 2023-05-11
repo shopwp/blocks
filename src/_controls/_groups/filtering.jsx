@@ -1,17 +1,42 @@
-import Title from "../title"
-import Collection from "../collection"
-import Tag from "../tag"
-import Vendor from "../vendor"
-import ProductType from "../product-type"
-import AvailableForSale from "../available-for-sale"
-import Connective from "../connective"
+const Title = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlTitle-admin' */ "../title")
+)
+
+const Collection = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlCollection-admin' */ "../collection")
+)
+
+const Tag = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlTag-admin' */ "../tag")
+)
+
+const Vendor = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlVendor-admin' */ "../vendor")
+)
+
+const ProductType = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlProductType-admin' */ "../product-type")
+)
+
+const AvailableForSale = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ControlAvailableForSale-admin' */ "../available-for-sale"
+  )
+)
+
+const Connective = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ControlConnective-admin' */ "../connective")
+)
+
 import { useBlockState } from "@shopwp/blocks"
 
 function FilteringControls({ settings, single = false }) {
   const blockState = useBlockState()
+  const { Suspense } = wp.element
+  const { Spinner } = wp.components
 
   return (
-    <>
+    <Suspense fallback={<Spinner />}>
       <Title
         title={settings.title}
         isLoading={settings.isLoading}
@@ -41,7 +66,7 @@ function FilteringControls({ settings, single = false }) {
       )}
       {!single && <AvailableForSale state={settings.availableForSale} />}
       {!single && <Connective state={settings.connective} />}
-    </>
+    </Suspense>
   )
 }
 
