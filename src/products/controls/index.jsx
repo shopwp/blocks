@@ -1,4 +1,3 @@
-import BlockControls from "../../_controls"
 import FilteringControls from "../../_controls/_groups/filtering"
 import GeneralControls from "../../_controls/_groups/general"
 import LayoutControls from "../../_controls/_groups/layout"
@@ -15,11 +14,11 @@ import { useBlockState } from "../../_state/hooks"
 
 function ProductsControls() {
   const { PanelBody } = wp.components
-
+  const { InspectorControls } = wp.blockEditor
   const { settings: settings, t } = useBlockState()
 
   return (
-    <BlockControls>
+    <InspectorControls>
       <PanelBody title={t.l.filtering} initialOpen={false}>
         <FilteringControls settings={settings} />
       </PanelBody>
@@ -67,7 +66,7 @@ function ProductsControls() {
       <PanelBody title={t.a.template} initialOpen={false}>
         <TemplateControls settings={settings} />
       </PanelBody>
-    </BlockControls>
+    </InspectorControls>
   )
 }
 

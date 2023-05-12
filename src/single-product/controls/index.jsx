@@ -9,16 +9,16 @@ import ButtonControls from "../../_controls/_groups/buy-button"
 import CheckoutControls from "../../_controls/_groups/checkout"
 import SubscriptionsControls from "../../_controls/_groups/subscriptions"
 import TemplateControls from "../../_controls/_groups/template"
-import BlockControls from "../../_controls"
 import { useBlockState } from "../../_state/hooks"
 
 function SingleProductControls() {
   const { PanelBody } = wp.components
+  const { InspectorControls } = wp.blockEditor
 
   const { settings: settings, t: t } = useBlockState()
 
   return (
-    <BlockControls>
+    <InspectorControls>
       <PanelBody title={t.l.filtering} initialOpen={true}>
         <FilteringControls settings={settings} single={true} />
       </PanelBody>
@@ -62,7 +62,7 @@ function SingleProductControls() {
       <PanelBody title={t.a.template} initialOpen={false}>
         <TemplateControls settings={settings} />
       </PanelBody>
-    </BlockControls>
+    </InspectorControls>
   )
 }
 
