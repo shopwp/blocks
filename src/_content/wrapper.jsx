@@ -1,17 +1,34 @@
 import BlockProvider from "../_state/provider"
-import ProductsContent from "../products/content"
+import ControlsWrapper from "../_controls/wrapper"
+import BlockContent from "./index"
+import {
+  Products,
+  Collections,
+  Storefront,
+  CartIcon,
+  Search,
+} from "@shopwp/components"
 
-function BlockWrapper({ blockProps, children }) {
-  wp.element.useEffect(() => {
-    blockProps.setAttributes({
-      clientId: blockProps.clientId,
-    })
-  }, [])
-
+function BlockWrapper({ blockProps, Controls }) {
   return (
     <BlockProvider blockProps={blockProps}>
-      {children}
-      <ProductsContent />
+      <ControlsWrapper>
+        <Controls />
+      </ControlsWrapper>
+
+      <BlockContent>
+        {blockProps.name.includes("shopwp/collection") ? (
+          <Collections />
+        ) : blockProps.name.includes("shopwp/storefront") ? (
+          <Storefront />
+        ) : blockProps.name.includes("shopwp/cart-icon") ? (
+          <CartIcon />
+        ) : blockProps.name.includes("shopwp/search") ? (
+          <Search />
+        ) : (
+          <Products />
+        )}
+      </BlockContent>
     </BlockProvider>
   )
 }

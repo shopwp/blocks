@@ -1,21 +1,29 @@
-const TitleSize = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlTitleSize-admin' */ "../title-size")
-)
+import { Color, FontSize } from "@shopwp/wp-ui"
 
-const TitleColor = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlTitleColor-admin' */ "../title-color")
-)
+import { useBlockState, useBlockDispatch } from "../../_state/hooks"
 
 function TitleControls({ settings }) {
-  const { Suspense } = wp.element
-  const { Spinner } = wp.components
+  const blockDispatch = useBlockDispatch()
+  const blockState = useBlockState()
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <TitleSize fontSize={settings.titleSize} />
-      <TitleColor titleColor={settings.titleColor} />
-    </Suspense>
+    <>
+      <FontSize
+        label="Product title font size"
+        name="titleTypeFontSize"
+        translations={blockState.t}
+        settings={blockState.settings}
+        dispatch={blockDispatch}
+      />
+
+      <Color
+        name="titleColor"
+        settings={settings}
+        label={blockState.t.l.titleColor}
+        dispatch={blockDispatch}
+      />
+    </>
   )
 }
 
-export default wp.element.memo(TitleControls)
+export default TitleControls

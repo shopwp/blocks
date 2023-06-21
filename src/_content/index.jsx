@@ -1,37 +1,23 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { Shop } from "@shopwp/components"
-import { encodeSettings, compareSettings } from "@shopwp/common"
 import { useBlockState } from "../_state/hooks"
 
 function BlockContent({ children }) {
-  const { useEffect } = wp.element
-
-  const state = useBlockState()
-
-  useEffect(() => {
-    var settings = compareSettings(state.settings, state.defaultSettings)
-
-    if (!settings) {
-      return
-    }
-
-    state.blockProps.setAttributes({
-      settingsId: encodeSettings(settings),
-    })
-  }, [state.settings])
+  const blockState = useBlockState()
 
   return (
     <Shop>
       {wp.element.cloneElement(children, {
-        settings: state.settings,
-        id: state.blockProps.clientId,
-        element: state.componentElement,
-        isLoading: state.isLoading,
-        queryParams: state.queryParams,
-        queryType: state.queryType,
+        settings: blockState.settings,
+        id: blockState.blockProps.clientId,
+        element: blockState.componentElement,
+        queryParams: blockState.queryParams,
+        queryType: blockState.queryType,
+        skeletonType: blockState.blockProps.name,
       })}
     </Shop>
   )
 }
+
 export default BlockContent

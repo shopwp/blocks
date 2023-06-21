@@ -1,18 +1,23 @@
 import BlockRoot from "./_content/root"
 import BlockWrapper from "./_content/wrapper"
 import Icon from "./_icons"
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 const queryClient = new QueryClient()
 
-function register(title, description, Controls) {
+function register(settings, Controls) {
   return {
-    title: title,
-    description: description,
-    category: "shopwp-products",
+    title: settings.title,
+    description: settings.description,
+    category: settings.category ? settings.category : "shopwp-products",
     keywords: ["products", "shopify", "store", "ecommerce", "sell"],
+    supports: settings?.supports ? settings.supports : false,
     icon: Icon,
+    example: {
+      attributes: {
+        preview: settings.preview,
+      },
+    },
     attributes: {
       settingsId: {
         type: "string",
@@ -20,24 +25,52 @@ function register(title, description, Controls) {
       },
       defaultSettings: {
         type: "object",
-        default: shopwp.products,
+        default: settings?.defaultSettings
+          ? settings.defaultSettings
+          : shopwp.products,
+      },
+      layoutType: {
+        type: "string",
+        default: shopwp.misc.layoutType,
+      },
+      blockType: {
+        type: "string",
+        default: settings?.blockType ? settings.blockType : "products",
       },
       clientId: {
         type: "string",
         default: "",
       },
+      preview: {
+        type: "string",
+        default: "",
+      },
+      name: {
+        type: "string",
+        default: "",
+      },
     },
     edit: (props) => {
-      return (
+      const { useEffect } = wp.element
+      const { setAttributes, clientId, name } = props
+
+      useEffect(() => {
+        setAttributes({ clientId: clientId, name: name })
+      }, [clientId])
+
+      return props.attributes.preview ? (
+        <img
+          src={props.attributes.preview}
+          style={{ width: "100%", height: "auto" }}
+        />
+      ) : (
         <QueryClientProvider client={queryClient}>
-          <BlockWrapper blockProps={props}>
-            <Controls />
-          </BlockWrapper>
+          <BlockWrapper blockProps={props} Controls={Controls} />
         </QueryClientProvider>
       )
     },
     save: (props) => {
-      return <BlockRoot attributes={props.attributes} />
+      return <BlockRoot blockProps={props} />
     },
   }
 }

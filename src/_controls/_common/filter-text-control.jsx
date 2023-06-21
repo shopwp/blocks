@@ -2,28 +2,30 @@
 import { jsx, css } from "@emotion/react"
 import { convertValuesToString, removeEmptyValues } from "./"
 import { useDebounce } from "@shopwp/hooks"
-import { useBlockDispatch } from "../../_state/hooks"
+import { fetchPostById } from "@shopwp/api"
 
 function FilterTextControl({
-  state,
+  name,
   label,
-  help,
-  settingName,
-  isLoading,
+  dispatch,
+  settings,
+  help = false,
+  isLoading = false,
   disabled = false,
   collection = null,
 }) {
+  var valsToString = convertValuesToString(settings[name])
+
   const { useEffect, useState, useRef } = wp.element
   const { TextControl, Spinner } = wp.components
-  const [localVal, setLocalVal] = useState(convertValuesToString(state))
-  const debouncedValue = useDebounce(localVal, 250)
+  const [localVal, setLocalVal] = useState(valsToString)
+  const debouncedValue = useDebounce(localVal, 350)
   const isFirstRender = useRef(true)
   const [isTouched, setIsTouched] = useState(false)
-  const dispatch = useBlockDispatch()
 
   const spinnerStyles = css`
     position: absolute;
-    top: 27px;
+    top: 30px;
     right: 0px;
     margin: 0;
     background: white;
@@ -36,51 +38,20 @@ function FilterTextControl({
 
   const filterWrapCSS = css`
     position: relative;
+    input {
+      opacity: ${isLoading ? "0.7" : "1"};
+    }
   `
 
   function onChange(newVal) {
+    setIsTouched(true)
     setLocalVal(newVal)
   }
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
+  async function fetchPostData(postId) {
+    try {
+      const post = await fetchPostById(postId, "wps_products")
 
-    var newVal = removeEmptyValues(localVal)
-
-    if (settingName === "collection" && newVal.length) {
-      dispatch({
-        type: "SET_QUERY_TYPE",
-        payload: "collectionProducts",
-      })
-
-      dispatch({
-        type: "SET_COLLECTION_TITLES",
-        payload: newVal[0],
-      })
-
-      dispatch({
-        type: "UPDATE_SETTING",
-        payload: { key: "tag", value: false },
-      })
-
-      dispatch({
-        type: "UPDATE_SETTING",
-        payload: { key: "vendor", value: false },
-      })
-
-      dispatch({
-        type: "UPDATE_SETTING",
-        payload: { key: "productType", value: false },
-      })
-
-      dispatch({
-        type: "UPDATE_SETTING",
-        payload: { key: "title", value: false },
-      })
-    } else {
       dispatch({
         type: "SET_QUERY_TYPE",
         payload: "products",
@@ -90,28 +61,95 @@ function FilterTextControl({
         type: "SET_COLLECTION_TITLES",
         payload: false,
       })
+
+      dispatch({
+        type: "UPDATE_SETTING",
+        payload: { key: "postId", value: postId },
+      })
+
+      dispatch({
+        type: "UPDATE_SETTING",
+        payload: { key: "productId", value: post.meta.product_id },
+      })
+    } catch (error) {
+      console.error("ShopWP Error: ", error)
+    }
+  }
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
     }
 
-    setIsTouched(true)
+    var values = removeEmptyValues(localVal)
 
-    dispatch({
-      type: "UPDATE_SETTING",
-      payload: { key: settingName, value: newVal },
-    })
+    if (name === "postId") {
+      var newActualNuim = parseInt(debouncedValue)
+      if (isNaN(newActualNuim)) {
+        return
+      }
+
+      fetchPostData(newActualNuim)
+    } else {
+      if (name === "collection" && values.length) {
+        dispatch({
+          type: "SET_QUERY_TYPE",
+          payload: "collectionProducts",
+        })
+
+        dispatch({
+          type: "SET_COLLECTION_TITLES",
+          payload: values[0],
+        })
+
+        dispatch({
+          type: "UPDATE_SETTING",
+          payload: { key: "tag", value: false },
+        })
+
+        dispatch({
+          type: "UPDATE_SETTING",
+          payload: { key: "vendor", value: false },
+        })
+
+        dispatch({
+          type: "UPDATE_SETTING",
+          payload: { key: "productType", value: false },
+        })
+
+        dispatch({
+          type: "UPDATE_SETTING",
+          payload: { key: "title", value: false },
+        })
+      } else {
+        dispatch({
+          type: "SET_QUERY_TYPE",
+          payload: "products",
+        })
+
+        dispatch({
+          type: "SET_COLLECTION_TITLES",
+          payload: false,
+        })
+      }
+
+      dispatch({
+        type: "UPDATE_SETTING",
+        payload: { key: name, value: values },
+      })
+    }
   }, [debouncedValue])
 
   useEffect(() => {
-    if (!isLoading) {
-      setIsTouched(false)
-    }
-  }, [isLoading])
-
-  useEffect(() => {
-    if (collection && settingName !== "collection") {
+    if (collection && name !== "collection") {
       setLocalVal("")
     }
   }, [collection])
 
+  function onBlur() {
+    setIsTouched(false)
+  }
   return (
     <div css={filterWrapCSS}>
       {isLoading && isTouched ? (
@@ -125,10 +163,11 @@ function FilterTextControl({
         value={localVal}
         help={help}
         onChange={onChange}
-        disabled={disabled}
+        disabled={isLoading || disabled}
+        onBlur={onBlur}
       />
     </div>
   )
 }
 
-export default wp.element.memo(FilterTextControl)
+export default FilterTextControl

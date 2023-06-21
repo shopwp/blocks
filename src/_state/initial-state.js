@@ -24,79 +24,60 @@ function getBlockSettings(settingsId, defaultSettings) {
   return getDefaultBlockSettings(defaultSettings)
 }
 
-function customDefaultSettingsProductSingle(settings) {
-  var copySettings = settings
-
-  copySettings.limit = 1
-  copySettings.itemsPerRow = 1
-  copySettings.productsLinkTo = "none"
-  copySettings.excludes = ["description"]
-
-  return copySettings
-}
-
-function customDefaultSettingsBuyButton(settings) {
-  var copySettings = settings
-
-  copySettings.limit = 1
-  copySettings.itemsPerRow = 1
-  copySettings.excludes = ["title", "images", "description", "pricing"]
-  copySettings.productsLinkTo = "none"
-
-  return copySettings
-}
-
-function customDefaultSettingsProducts(settings) {
-  var copySettings = settings
-  copySettings.productsLinkTo = "none"
-  copySettings.excludes = ["description"]
-  copySettings.itemsPerRow = 3
-  copySettings.limit = false
-
-  return copySettings
-}
-
-function customizeDefaultSettings(blockProps) {
-  if (blockProps.name === "shopwp/products") {
-    return customDefaultSettingsProducts(blockProps.attributes.defaultSettings)
-  } else if (blockProps.name === "shopwp/single-product") {
-    return customDefaultSettingsProductSingle(
-      blockProps.attributes.defaultSettings
-    )
-  } else if (blockProps.name === "shopwp/buy-button") {
-    return customDefaultSettingsBuyButton(blockProps.attributes.defaultSettings)
-  } else {
-    return blockProps.attributes.defaultSettings
-  }
-}
-
 /*
 
-Setup inital block state
+Setup initial block state
 
 */
 function BlockInitialState({ blockProps }) {
-  blockProps.attributes.defaultSettings = customizeDefaultSettings(blockProps)
-
   const [blockData, settingsId] = getBlockSettings(
     blockProps.attributes.settingsId,
     blockProps.attributes.defaultSettings
   )
 
-  if (blockData.limit && blockData.limit < blockData.pageSize) {
-    var pageSize = blockData.limit
+  if (blockProps.name === "shopwp/cart-icon") {
+    var queryParams = false
   } else {
-    var pageSize = blockData.pageSize
-  }
+    if (
+      blockProps.name === "shopwp/collections" ||
+      blockProps.name === "shopwp/collection-image" ||
+      blockProps.name === "shopwp/collection-title" ||
+      blockProps.name === "shopwp/collection-description"
+    ) {
+      var queryParams = {
+        query: blockData.collectionsQuery,
+        sortKey: blockData.collectionsSortBy.toUpperCase(),
+        reverse: blockData.collectionsReverse,
+        first: blockData.collectionsPageSize,
+        country: shopwp.general.countryCode.toUpperCase(),
+        language: shopwp.general.languageCode.toUpperCase(),
+      }
 
-  var queryParams = {
-    query: blockData.query,
-    sortKey: blockData.sortBy.toUpperCase(),
-    reverse: blockData.reverse,
-    first: pageSize,
-    collection_titles: blockData.collection ? blockData.collection[0] : false,
-    country: shopwp.general.countryCode.toUpperCase(),
-    language: shopwp.general.languageCode.toUpperCase(),
+      var queryType = "collections"
+      var collectionTitles = false
+      blockData.collection = false
+    } else {
+      if (blockData.limit && blockData.limit < blockData.pageSize) {
+        var pageSize = blockData.limit
+      } else {
+        var pageSize = blockData.pageSize
+      }
+
+      var queryParams = {
+        query: blockData.query,
+        sortKey: blockData.sortBy.toUpperCase(),
+        reverse: blockData.reverse,
+        first: pageSize,
+        collection_titles: blockData.collection
+          ? blockData.collection[0]
+          : false,
+        country: shopwp.general.countryCode.toUpperCase(),
+        language: shopwp.general.languageCode.toUpperCase(),
+      }
+
+      var queryType = blockData.collection ? "collectionProducts" : "products"
+      var collectionTitles = blockData.collection ? blockData.collection : false
+    }
   }
 
   return {
@@ -105,7 +86,6 @@ function BlockInitialState({ blockProps }) {
     componentElement: false,
     shouldForceUpdate: false,
     componentType: "products",
-    queryType: "products",
     blockProps: blockProps,
     settings: blockData,
     settingsId: settingsId,
@@ -115,8 +95,8 @@ function BlockInitialState({ blockProps }) {
     payload: [],
     queryParams: queryParams,
     originalQueryParams: queryParams,
-    queryType: blockData.collection ? "collectionProducts" : "products",
-    collectionTitles: blockData.collection ? blockData.collection : false,
+    queryType: queryType,
+    collectionTitles: collectionTitles,
     hasNextPage: false,
     totalShown: 0,
     isFetchingNext: false,

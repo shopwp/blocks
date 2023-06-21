@@ -1,12 +1,18 @@
 import { useDebounce } from "@shopwp/hooks"
 import { useBlockDispatch } from "../../_state/hooks"
 
-function TextControlDebounced({ state, label, help = false, settingName }) {
-  const { useEffect, useState, useRef } = wp.element
+function TextControlDebounced({
+  state,
+  label,
+  help = false,
+  settingName,
+  placeholder = "",
+  fallback = "",
+}) {
+  const { useEffect, useState } = wp.element
   const { TextControl } = wp.components
-  const [localVal, setLocalVal] = useState(state)
+  const [localVal, setLocalVal] = useState(() => (state ? state : ""))
   const debouncedValue = useDebounce(localVal, 300)
-  const isFirstRender = useRef(true)
   const dispatch = useBlockDispatch()
 
   function onChange(newVal) {
@@ -14,14 +20,12 @@ function TextControlDebounced({ state, label, help = false, settingName }) {
   }
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
-
     dispatch({
       type: "UPDATE_SETTING",
-      payload: { key: settingName, value: localVal },
+      payload: {
+        key: settingName,
+        value: localVal ? localVal : fallback,
+      },
     })
   }, [debouncedValue])
 
@@ -31,6 +35,7 @@ function TextControlDebounced({ state, label, help = false, settingName }) {
       value={localVal}
       help={help}
       onChange={onChange}
+      placeholder={placeholder}
     />
   )
 }

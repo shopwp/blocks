@@ -1,7 +1,7 @@
 {
   "name": "@shopwp/blocks",
   "sideEffects": false,
-  "version": "7.1.12",
+  "version": "7.1.13",
   "description": "Gutenberg Blocks for ShopWP.",
   "main": "index.js",
   "scripts": {

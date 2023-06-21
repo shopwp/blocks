@@ -5,8 +5,17 @@ function registerBlockBuyButton() {
   wp.blocks.registerBlockType(
     "shopwp/buy-button",
     register(
-      shopwp.t.l.buyButton,
-      shopwp.t.a.blockBuyButtonDesc,
+      {
+        title: shopwp.t.l.buyButton,
+        description: shopwp.t.a.blockBuyButtonDesc,
+        supports: {
+          multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
+          reusable: false,
+        },
+        preview:
+          shopwp.misc.pluginsDirURL +
+          "admin/imgs/blocks/preview/product-buy-button.jpg",
+      },
       BuyButtonControls
     )
   )

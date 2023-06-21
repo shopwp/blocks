@@ -5,6 +5,7 @@ import { rSet, rErr } from "@shopwp/common"
 function querySettings() {
   return [
     "title",
+    "productId",
     "tag",
     "vendor",
     "productType",
@@ -12,6 +13,12 @@ function querySettings() {
     "availableForSale",
     "connective",
     "collection",
+    "collectionsTitle",
+    "collectionsReverse",
+    "collectionsPageSize",
+    "collectionsLimit",
+    "collectionsSortBy",
+    "collectionId",
     "pageSize",
     "sortBy",
     "reverse",
@@ -23,24 +30,56 @@ function changedQuerySetting(key) {
   return querySettings().includes(key)
 }
 
-function buildQueryFromSelections(options) {
+function buildQueryFromSelections(settings, blockType) {
   var selections = {}
 
-  selections.titles = options.title
-  selections.collection = options.collection ? options.collection[0] : false
-  selections.tags = options.tag
-  selections.vendors = options.vendor
-  selections.types = options.productType
-  selections.available_for_sale = options.availableForSale
+  if (blockType === "collections") {
+    if (settings.collectionsTitle) {
+      selections.titles = settings.collectionsTitle
+      selections.collection = false
+      selections.id = settings.collectionId
+    } else {
+      selections.titles = false
+      selections.id = settings.collectionId
+    }
 
-  return buildQueryStringFromSelections(selections, options)
+    selections.tags = false
+    selections.vendors = false
+    selections.types = false
+    selections.available_for_sale = false
+    // selections.id = false
+  } else {
+    selections.titles = settings.title
+
+    if (settings.collection instanceof Array) {
+      selections.collection = settings.collection.length
+        ? settings.collection[0]
+        : false
+    } else {
+      selections.collection = false
+    }
+
+    selections.tags = settings.tag
+    selections.vendors = settings.vendor
+    selections.types = settings.productType
+    selections.available_for_sale = settings.availableForSale
+
+    if (settings.productId) {
+      selections.id = settings.productId
+    } else if (settings.collectionId) {
+      selections.id = settings.collectionId
+    }
+  }
+
+  return buildQueryStringFromSelections(selections, settings)
 }
 
 function findQueryParamToUpdate(
   { key, value },
   queryParams,
   originalQueryParams,
-  newSettings
+  newSettings,
+  blockType
 ) {
   var obj = { ...queryParams }
 
@@ -57,14 +96,15 @@ function findQueryParamToUpdate(
       obj["first"] = value
 
       break
+
     case "limit":
       if (!value) {
         obj["first"] = originalQueryParams.first
       } else {
-        if (value < queryParams.first) {
-          obj["first"] = value
+        if (value > queryParams.first) {
+          obj["first"] = originalQueryParams.first
         } else {
-          obj["first"] = queryParams.first
+          obj["first"] = value
         }
       }
 
@@ -73,11 +113,28 @@ function findQueryParamToUpdate(
       obj["collection_titles"] = value[0]
 
       break
+
+    case "collectionsSortBy":
+      obj["collectionsSortBy"] = value
+
+      break
+    case "collectionsReverse":
+      obj["collectionsReverse"] = value
+
+      break
+    case "collectionsPageSize":
+      obj["collectionsPageSize"] = value
+
+    case "collectionsLimit":
+      obj["collectionsLimit"] = value
+
+      break
+
     default:
       break
   }
 
-  obj["query"] = buildQueryFromSelections(newSettings)
+  obj["query"] = buildQueryFromSelections(newSettings, blockType)
 
   return obj
 }
@@ -85,34 +142,92 @@ function findQueryParamToUpdate(
 function BlockReducer(state, action) {
   switch (action.type) {
     case "UPDATE_SETTING": {
-      if (typeof action.payload.value === "undefined") {
-        // get default instead
-        var valueToSet = state.defaultSettings[action.payload.key]
-      } else {
-        var valueToSet = action.payload.value
-      }
+      if (action.payload instanceof Array) {
+        var newSettings = state.settings
 
-      var newSettings = update(state.settings, {
-        $merge: {
-          [action.payload.key]: valueToSet,
-        },
-      })
+        action.payload.forEach((pay) => {
+          newSettings = update(newSettings, {
+            $merge: {
+              [pay.key]: pay.value,
+            },
+          })
+        })
+      } else {
+        if (typeof action.payload.value === "undefined") {
+          var valueToSet = state.defaultSettings[action.payload.key]
+        } else {
+          var valueToSet = action.payload.value
+        }
+
+        var newSettings = update(state.settings, {
+          $merge: {
+            [action.payload.key]: valueToSet,
+          },
+        })
+      }
 
       if (changedQuerySetting(action.payload.key)) {
         var queryParamObject = findQueryParamToUpdate(
           action.payload,
           state.queryParams,
           state.originalQueryParams,
-          newSettings
+          newSettings,
+          state.blockProps.attributes.blockType
         )
 
-        var built = buildQueryFromSelections(newSettings)
+        var built = buildQueryFromSelections(
+          newSettings,
+          state.blockProps.attributes.blockType
+        )
 
-        newSettings.query = update(state.settings.query, {
-          $set: built,
-        })
+        if (state.blockProps.attributes.blockType === "collections") {
+          newSettings.collectionsQuery = update(
+            state.settings.collectionsQuery,
+            {
+              $set: built,
+            }
+          )
 
-        //   action.payload.key
+          newSettings.collectionsPageSize = update(
+            state.settings.collectionsPageSize,
+            {
+              $set: queryParamObject?.collectionsFirst
+                ? queryParamObject.collectionsFirst
+                : queryParamObject.first,
+            }
+          )
+
+          newSettings.collectionsReverse = update(
+            state.settings.collectionsPageSize,
+            {
+              $set: queryParamObject?.collectionsReverse
+                ? queryParamObject.collectionsReverse
+                : queryParamObject.reverse,
+            }
+          )
+
+          newSettings.collectionsSortBy = update(
+            state.settings.collectionsSortBy,
+            {
+              $set: queryParamObject?.collectionsSortKey
+                ? queryParamObject.collectionsSortKey
+                : queryParamObject.sortKey,
+            }
+          )
+
+          newSettings.collectionsLimit = update(
+            state.settings.collectionsLimit,
+            {
+              $set: queryParamObject?.collectionsLimit
+                ? queryParamObject.collectionsLimit
+                : queryParamObject.limit,
+            }
+          )
+        } else {
+          newSettings.query = update(state.settings.query, {
+            $set: built,
+          })
+        }
       } else {
         var queryParamObject = state.queryParams
       }

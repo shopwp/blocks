@@ -1,30 +1,55 @@
+import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
 import FilteringControls from "../../_controls/_groups/filtering"
-import GeneralControls from "../../_controls/_groups/general"
-import ButtonControls from "../../_controls/_groups/buy-button"
-import CheckoutControls from "../../_controls/_groups/checkout"
-import { useBlockState } from "@shopwp/blocks"
+import ProductGeneralControls from "../../_controls/_groups/product-general"
+import ProductBuyButtonControls from "../../_controls/_groups/product-buy-button"
+import ProductCheckoutControls from "../../_controls/_groups/product-checkout"
 
-function BuyButtonControls() {
+function BuyButtonControls({ layoutType }) {
   const { PanelBody } = wp.components
   const { InspectorControls } = wp.blockEditor
-  const { settings, t } = useBlockState()
+
+  const blockState = useBlockState()
+  const blockDispatch = useBlockDispatch()
 
   return (
     <InspectorControls>
-      <PanelBody title={t.l.filtering} initialOpen={false}>
-        <FilteringControls settings={settings} single={true} />
+      {layoutType !== "template-pdp" ? (
+        <PanelBody title={blockState.t.l.filtering} initialOpen={false}>
+          <FilteringControls
+            settings={blockState.settings}
+            dispatch={blockDispatch}
+            translations={blockState.t}
+            single={true}
+            isLoading={blockState.isLoading}
+          />
+        </PanelBody>
+      ) : null}
+
+      <PanelBody title={blockState.t.l.general} initialOpen={false}>
+        <ProductGeneralControls
+          settings={blockState.settings}
+          dispatch={blockDispatch}
+          translations={blockState.t}
+          isLoading={blockState.isLoading}
+        />
       </PanelBody>
 
-      <PanelBody title={t.l.general} initialOpen={false}>
-        <GeneralControls settings={settings} />
+      <PanelBody title={blockState.t.l.buyButton} initialOpen={true}>
+        <ProductBuyButtonControls
+          settings={blockState.settings}
+          dispatch={blockDispatch}
+          translations={blockState.t}
+          isLoading={blockState.isLoading}
+        />
       </PanelBody>
 
-      <PanelBody title={t.l.buyButton} initialOpen={false}>
-        <ButtonControls settings={settings} />
-      </PanelBody>
-
-      <PanelBody title={t.l.checkout} initialOpen={false}>
-        <CheckoutControls settings={settings} />
+      <PanelBody title={blockState.t.l.checkout} initialOpen={false}>
+        <ProductCheckoutControls
+          settings={blockState.settings}
+          dispatch={blockDispatch}
+          translations={blockState.t}
+          isLoading={blockState.isLoading}
+        />
       </PanelBody>
     </InspectorControls>
   )

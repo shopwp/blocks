@@ -1,8 +1,13 @@
 import { RootElement } from "@shopwp/components"
 
-function BlockRoot({ attributes }) {
+function BlockRoot({ blockProps }) {
   return (
-    <RootElement settings={attributes.settingsId} id={attributes.clientId} />
+    <RootElement
+      settings={blockProps.attributes.settingsId}
+      id={blockProps.attributes.clientId}
+      type={blockProps.attributes.blockType}
+      skeletonType={blockProps.attributes.name}
+    />
   )
 }
 

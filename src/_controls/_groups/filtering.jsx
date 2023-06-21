@@ -1,73 +1,108 @@
-const Title = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlTitle-admin' */ "../title")
-)
+import FilterTextControl from "../_common/filter-text-control"
+import { Radio } from "@shopwp/wp-ui"
 
-const Collection = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlCollection-admin' */ "../collection")
-)
-
-const Tag = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlTag-admin' */ "../tag")
-)
-
-const Vendor = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlVendor-admin' */ "../vendor")
-)
-
-const ProductType = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlProductType-admin' */ "../product-type")
-)
-
-const AvailableForSale = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'ControlAvailableForSale-admin' */ "../available-for-sale"
-  )
-)
-
-const Connective = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ControlConnective-admin' */ "../connective")
-)
-
-import { useBlockState } from "@shopwp/blocks"
-
-function FilteringControls({ settings, single = false }) {
-  const blockState = useBlockState()
-  const { Suspense } = wp.element
-  const { Spinner } = wp.components
-
+function FilteringControls({
+  settings,
+  dispatch,
+  translations,
+  isLoading = false,
+  single = false,
+  forCollection = false,
+}) {
   return (
-    <Suspense fallback={<Spinner />}>
-      <Title
-        title={settings.title}
-        isLoading={settings.isLoading}
+    <>
+      <FilterTextControl
+        name="title"
+        label={translations.a.filterByTitle}
+        help={translations.a.filterByTitleHelp}
+        isLoading={isLoading}
         collection={settings.collection}
+        settings={settings}
+        dispatch={dispatch}
       />
-      {!single && <Collection state={settings.collection} />}
-      {!single && (
-        <Tag
-          translations={blockState.t}
-          state={settings.tag}
-          collection={settings.collection}
+
+      {/* <PostID state={blockState} collection={settings.collection} /> */}
+      {!single && !forCollection ? (
+        <FilterTextControl
+          name="collection"
+          label={translations.a.filterByCollection}
+          help={translations.a.filterByCollectionHelp}
+          isLoading={isLoading}
+          settings={settings}
+          dispatch={dispatch}
         />
-      )}
-      {!single && (
-        <Vendor
-          translations={blockState.t}
-          state={settings.vendor}
+      ) : null}
+      {!single && !forCollection ? (
+        <FilterTextControl
+          name="tag"
+          label={translations.a.filterByTag}
+          help={translations.a.filterByTagHelp}
+          isLoading={isLoading}
           collection={settings.collection}
+          settings={settings}
+          dispatch={dispatch}
         />
-      )}
-      {!single && (
-        <ProductType
-          translations={blockState.t}
+      ) : null}
+      {!single && !forCollection ? (
+        <FilterTextControl
+          name="vendor"
+          label={translations.a.filterByVendor}
+          help={translations.a.filterByVendorHelp}
+          isLoading={isLoading}
+          collection={settings.collection}
+          settings={settings}
+          dispatch={dispatch}
+        />
+      ) : null}
+      {!single && !forCollection ? (
+        <FilterTextControl
+          name="productType"
+          label={translations.a.filterByProdType}
+          help={translations.a.filterByProdTypeHelp}
           state={settings.productType}
+          isLoading={isLoading}
           collection={settings.collection}
+          settings={settings}
+          dispatch={dispatch}
         />
-      )}
-      {!single && <AvailableForSale state={settings.availableForSale} />}
-      {!single && <Connective state={settings.connective} />}
-    </Suspense>
+      ) : null}
+      {!single && !forCollection ? (
+        <Radio
+          name="availableForSale"
+          label={translations.l.availSale}
+          settings={settings}
+          dispatch={dispatch}
+          disabled={isLoading}
+          help={translations.a.availSaleHelp}
+          options={[
+            { label: translations.a.any, value: "any" },
+            { label: translations.l.inStock, value: "true" },
+            { label: translations.l.outOfStock, value: "false" },
+          ]}
+        />
+      ) : null}
+      {!single && !forCollection ? (
+        <Radio
+          name="connective"
+          label={translations.a.matchCriteria}
+          help={translations.a.matchCriteriaHelp}
+          settings={settings}
+          dispatch={dispatch}
+          disabled={isLoading}
+          options={[
+            {
+              label: translations.a.and,
+              value: "AND",
+            },
+            {
+              label: translations.a.or,
+              value: "OR",
+            },
+          ]}
+        />
+      ) : null}
+    </>
   )
 }
 
-export default wp.element.memo(FilteringControls)
+export default FilteringControls
