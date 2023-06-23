@@ -44,11 +44,20 @@ function BlockInitialState({ blockProps }) {
       blockProps.name === "shopwp/collection-title" ||
       blockProps.name === "shopwp/collection-description"
     ) {
+      if (
+        blockData.collectionsLimit &&
+        blockData.collectionsLimit < blockData.collectionsPageSize
+      ) {
+        var collectionsPageSize = blockData.collectionsLimit
+      } else {
+        var collectionsPageSize = blockData.collectionsPageSize
+      }
+
       var queryParams = {
         query: blockData.collectionsQuery,
         sortKey: blockData.collectionsSortBy.toUpperCase(),
         reverse: blockData.collectionsReverse,
-        first: blockData.collectionsPageSize,
+        first: collectionsPageSize,
         country: shopwp.general.countryCode.toUpperCase(),
         language: shopwp.general.languageCode.toUpperCase(),
       }
