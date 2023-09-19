@@ -297,6 +297,11 @@ function ControlsWrapper({ children }) {
 
     var newSettingsId = encodeSettings(settings)
 
+    if (newSettingsId instanceof Error) {
+      console.error("ShopWP Error: ", newSettingsId)
+      return
+    }
+
     blockState.blockProps.setAttributes({
       settingsId: newSettingsId,
     })

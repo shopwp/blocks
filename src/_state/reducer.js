@@ -238,11 +238,25 @@ function BlockReducer(state, action) {
 
       var settingsId = encodeSettings(newSettings)
 
-      return {
-        ...state,
-        queryParams: okqueryParamObject,
-        settings: newSettings,
-        settingsId: settingsId,
+      if (settingsId instanceof Error) {
+        wp.data
+          .dispatch("core/notices")
+          .createNotice("error", shopwp.t.e.badChars, {
+            id: "shopwp-bad-chars",
+          })
+        return {
+          ...state,
+        }
+      } else {
+        wp.data.dispatch("core/notices").removeNotice("shopwp-bad-chars")
+
+        return {
+          ...state,
+          queryParams: okqueryParamObject,
+          settings: newSettings,
+          settingsId: settingsId,
+          notice: false,
+        }
       }
     }
 

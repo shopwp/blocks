@@ -61,6 +61,9 @@ function ProductsControls() {
           dispatch={blockDispatch}
           translations={blockState.t}
           isLoading={blockState.isLoading}
+          isFromCollection={
+            blockState.queryType === "collectionProducts" ? true : false
+          }
         />
       </PanelBody>
 

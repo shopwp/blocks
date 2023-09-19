@@ -74,12 +74,20 @@ function ProductBuyButtonControls({ settings, dispatch, translations }) {
       />
 
       {settings.variantStyle === "dropdown" ? (
-        <Color
-          name="variantDropdownButtonColor"
-          label={translations.a.variantDropdownsBtnColor}
-          settings={settings}
-          dispatch={dispatch}
-        />
+        <>
+          <Color
+            name="variantDropdownButtonColor"
+            label={translations.a.variantDropdowns}
+            settings={settings}
+            dispatch={dispatch}
+          />
+          <Color
+            name="variantDropdownButtonTextColor"
+            label={translations.a.variantDropdownsBtnColor}
+            settings={settings}
+            dispatch={dispatch}
+          />
+        </>
       ) : null}
 
       <Toggle

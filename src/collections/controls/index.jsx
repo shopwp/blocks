@@ -96,6 +96,7 @@ function CollectionsControls() {
               dispatch={blockDispatch}
               translations={blockState.t}
               isLoading={blockState.isLoading}
+              isFromCollection={true}
             />
           </PanelBody>
           <PanelBody title={blockState.t.l.pagination} initialOpen={false}>
