@@ -1,4 +1,4 @@
-import { Toggle, Range, TextControl } from "@shopwp/wp-ui"
+import { Color, Toggle, Range, TextControl } from "@shopwp/wp-ui"
 
 function ProductPaginationControls({ settings, dispatch, translations }) {
   return (
@@ -33,6 +33,20 @@ function ProductPaginationControls({ settings, dispatch, translations }) {
       <Toggle
         name="infiniteScroll"
         label={translations.a.infiniteScroll}
+        settings={settings}
+        dispatch={dispatch}
+      />
+
+      <Color
+        name="paginationLoadMoreButtonColor"
+        settings={settings}
+        label={translations.a.loadMoreColor}
+        dispatch={dispatch}
+      />
+
+      <TextControl
+        name="paginationLoadMoreText"
+        label={translations.a.loadMoreText}
         settings={settings}
         dispatch={dispatch}
       />

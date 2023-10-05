@@ -1,5 +1,3 @@
-import BlockProvider from "../_state/provider"
-import ControlsWrapper from "../_controls/wrapper"
 import BlockContent from "./index"
 import {
   Products,
@@ -9,12 +7,12 @@ import {
   Search,
 } from "@shopwp/components"
 
-function BlockWrapper({ blockProps, Controls }) {
+import Controls from "./controls"
+
+function BlockWrapper({ blockProps }) {
   return (
-    <BlockProvider blockProps={blockProps}>
-      <ControlsWrapper>
-        <Controls />
-      </ControlsWrapper>
+    <>
+      <Controls name={blockProps.name} />
 
       <BlockContent>
         {blockProps.name.includes("shopwp/collection") ? (
@@ -29,7 +27,7 @@ function BlockWrapper({ blockProps, Controls }) {
           <Products />
         )}
       </BlockContent>
-    </BlockProvider>
+    </>
   )
 }
 

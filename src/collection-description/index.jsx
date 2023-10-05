@@ -1,27 +1,23 @@
 import register from "../register"
-import Controls from "./controls"
 
 function registerBlockCollectionDescription() {
   wp.blocks.registerBlockType(
     "shopwp/collection-description",
-    register(
-      {
-        title: "Collection Description",
-        description:
-          "This block allows you to add a single collection description by itself",
-        category: "shopwp-collections",
-        blockType: "collections",
-        defaultSettings: shopwp.collections,
-        supports: {
-          multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
-          reusable: false,
-        },
-        preview:
-          shopwp.misc.pluginsDirURL +
-          "admin/imgs/blocks/preview/collection-description.jpg",
+    register({
+      title: "Collection Description",
+      description:
+        "This block allows you to add a single collection description by itself",
+      category: "shopwp-collections",
+      blockType: "collections",
+      defaultSettings: shopwp.collections,
+      supports: {
+        multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
+        reusable: false,
       },
-      Controls
-    )
+      preview:
+        shopwp.misc.pluginsDirURL +
+        "admin/imgs/blocks/preview/collection-description.jpg",
+    })
   )
 }
 

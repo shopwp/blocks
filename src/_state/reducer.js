@@ -248,7 +248,9 @@ function BlockReducer(state, action) {
           ...state,
         }
       } else {
-        wp.data.dispatch("core/notices").removeNotice("shopwp-bad-chars")
+        if (state.blockProps.attributes.layoutType !== "shortcode") {
+          wp.data.dispatch("core/notices").removeNotice("shopwp-bad-chars")
+        }
 
         return {
           ...state,

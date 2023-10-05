@@ -70,103 +70,6 @@ function ControlsWrapper({ children }) {
     updateLockAttributesRecursive(clientId)
   }
 
-  function isSingleComponent(blockType) {
-    return [
-      "shopwp/buy-button",
-      "shopwp/title",
-      "shopwp/pricing",
-      "shopwp/description",
-      "shopwp/images",
-      "shopwp/collection-title",
-      "shopwp/collection-description",
-      "shopwp/collection-image",
-    ].includes(blockType)
-  }
-
-  function generateExcludes(blockName) {
-    var split = blockName.split("shopwp/")
-
-    if (split.length) {
-      split = split[1]
-    } else {
-      split = ""
-    }
-
-    if (split.includes("collection")) {
-      var splitAgain = split.split("collection-")
-
-      if (splitAgain.length) {
-        split = splitAgain[1]
-      } else {
-        split = ""
-      }
-    }
-
-    return [
-      "buy-button",
-      "images",
-      "image",
-      "products",
-      "description",
-      "pricing",
-      "title",
-    ].filter((c) => c !== split)
-  }
-  function maybeUpdateBlockDefaults() {
-    if (isSingleComponent(blockState.blockProps.name)) {
-      var excludes = generateExcludes(blockState.blockProps.name)
-
-      if (blockState.blockProps.name.includes("collection")) {
-        blockDispatch({
-          type: "UPDATE_SETTING",
-          payload: [
-            {
-              key: "limit",
-              value: 1,
-            },
-            {
-              key: "collectionsPagination",
-              value: false,
-            },
-            {
-              key: "collectionsItemsPerRow",
-              value: 1,
-            },
-            {
-              key: "collectionsExcludes",
-              value: excludes,
-            },
-          ],
-        })
-      } else {
-        blockDispatch({
-          type: "UPDATE_SETTING",
-          payload: [
-            {
-              key: "limit",
-              value: 1,
-            },
-            {
-              key: "pagination",
-              value: false,
-            },
-            {
-              key: "itemsPerRow",
-              value: 1,
-            },
-            {
-              key: "excludes",
-              value: excludes,
-            },
-            {
-              key: "linkTo",
-              value: "none",
-            },
-          ],
-        })
-      }
-    }
-  }
   useEffect(() => {
     if (onBeforePayloadUpdate === null) {
       return
@@ -190,12 +93,14 @@ function ControlsWrapper({ children }) {
   }, [onAfterPayloadUpdate])
 
   /*
-  
+
   Should only run if using the layout builder
-  
+
   */
   useEffect(() => {
-    maybeUpdateBlockDefaults()
+    if (layoutType === "shortcode") {
+      return
+    }
 
     if (isFirstRender.current) {
       isFirstRender.current = false
@@ -216,9 +121,9 @@ function ControlsWrapper({ children }) {
   }, [])
 
   /*
-  
+
   Should only run if using the layout builder
-  
+
   */
   useEffect(() => {
     if (!entityRecordEdits || Object.keys(entityRecordEdits).length === 0) {
@@ -281,9 +186,9 @@ function ControlsWrapper({ children }) {
   }, [entityRecordEdits.meta])
 
   /*
-  
+
   Should run for any and all blocks
-  
+
   */
   useEffect(() => {
     var settings = compareSettings(

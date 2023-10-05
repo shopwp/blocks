@@ -2,10 +2,10 @@ import BlockRoot from "./_content/root"
 import BlockWrapper from "./_content/wrapper"
 import Icon from "./_icons"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
+import BlockProvider from "./_state/provider"
 const queryClient = new QueryClient()
 
-function register(settings, Controls) {
+function register(settings) {
   return {
     title: settings.title,
     description: settings.description,
@@ -65,7 +65,9 @@ function register(settings, Controls) {
         />
       ) : (
         <QueryClientProvider client={queryClient}>
-          <BlockWrapper blockProps={props} Controls={Controls} />
+          <BlockProvider blockProps={props}>
+            <BlockWrapper blockProps={props} />
+          </BlockProvider>
         </QueryClientProvider>
       )
     },
