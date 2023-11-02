@@ -9,7 +9,10 @@ function registerBlockCollectionImage() {
         "This block allows you to add a single collection image by itself",
       category: "shopwp-collections",
       blockType: "collections",
-      defaultSettings: shopwp.collections,
+      defaultSettings: {
+        excludes: ["title", "description", "products"],
+      },
+      singleCollectionComponent: true,
       supports: {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,

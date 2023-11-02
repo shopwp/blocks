@@ -9,7 +9,10 @@ function registerBlockCollectionTitle() {
         "This block allows you to add a single collection title by itself",
       category: "shopwp-collections",
       blockType: "collections",
-      defaultSettings: shopwp.collections,
+      defaultSettings: {
+        excludes: ["image", "description", "products"],
+      },
+      singleCollectionComponent: true,
       supports: {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,

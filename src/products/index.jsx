@@ -6,6 +6,7 @@ function registerBlockProducts() {
     register({
       title: shopwp.t.l.products,
       description: shopwp.t.a.blockProductsDesc,
+      defaultSettings: shopwp.products,
       supports: {
         reusable: false,
       },

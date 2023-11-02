@@ -6,6 +6,10 @@ function registerBlockPricing() {
     register({
       title: shopwp.t.l.pricing,
       description: shopwp.t.a.blockPricingDesc,
+      defaultSettings: {
+        excludes: ["buy-button", "description", "title", "images"],
+      },
+      singleProductComponent: true,
       supports: {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,

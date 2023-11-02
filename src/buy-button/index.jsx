@@ -10,6 +10,10 @@ function registerBlockBuyButton() {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,
       },
+      defaultSettings: {
+        excludes: ["description", "title", "pricing", "images"],
+      },
+      singleProductComponent: true,
       preview:
         shopwp.misc.pluginsDirURL +
         "admin/imgs/blocks/preview/product-buy-button.jpg",

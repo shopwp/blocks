@@ -197,7 +197,13 @@ function ControlsWrapper({ children }) {
     )
 
     if (!settings || Object.keys(settings).length === 0) {
-      return
+      settings = {
+        excludes: blockState.defaultSettings.excludes,
+      }
+    } else {
+      if (!settings.excludes) {
+        settings.excludes = blockState.defaultSettings.excludes
+      }
     }
 
     var newSettingsId = encodeSettings(settings)

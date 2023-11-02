@@ -20,103 +20,7 @@ function getBlockSettings(settingsId, defaultSettings) {
   if (settingsId) {
     return getSavedBlockSettings(defaultSettings, settingsId)
   }
-
   return getDefaultBlockSettings(defaultSettings)
-}
-
-function generateExcludes(blockName) {
-  var split = blockName.split("shopwp/")
-
-  if (split.length) {
-    split = split[1]
-  } else {
-    split = ""
-  }
-
-  if (split.includes("collection")) {
-    var splitAgain = split.split("collection-")
-
-    if (splitAgain.length) {
-      split = splitAgain[1]
-    } else {
-      split = ""
-    }
-  }
-
-  return [
-    "buy-button",
-    "images",
-    "image",
-    "products",
-    "description",
-    "pricing",
-    "title",
-  ].filter((c) => c !== split)
-}
-
-function isSingleComponent(blockType) {
-  return [
-    "shopwp/buy-button",
-    "shopwp/title",
-    "shopwp/pricing",
-    "shopwp/description",
-    "shopwp/images",
-    "shopwp/collection-title",
-    "shopwp/collection-description",
-    "shopwp/collection-image",
-  ].includes(blockType)
-}
-
-function maybeUpdateBlockDefaults(blockProps) {
-  if (isSingleComponent(blockProps.name)) {
-    var excludes = generateExcludes(blockProps.name)
-
-    if (blockProps.name.includes("collection")) {
-      return [
-        {
-          key: "limit",
-          value: 1,
-        },
-        {
-          key: "collectionsPagination",
-          value: false,
-        },
-        {
-          key: "collectionsItemsPerRow",
-          value: 1,
-        },
-        {
-          key: "collectionsExcludes",
-          value: excludes,
-        },
-      ]
-    } else {
-      return [
-        {
-          key: "limit",
-          value: 1,
-        },
-        {
-          key: "pagination",
-          value: false,
-        },
-        {
-          key: "itemsPerRow",
-          value: 1,
-        },
-        {
-          key: "excludes",
-          value: excludes,
-        },
-        {
-          key: "linkTo",
-          value: "none",
-        },
-      ]
-    }
-  }
-
-  return []
 }
 
 /*
@@ -129,12 +33,6 @@ function BlockInitialState({ blockProps }) {
     blockProps.attributes.settingsId,
     blockProps.attributes.defaultSettings
   )
-
-  var stuff = maybeUpdateBlockDefaults(blockProps)
-
-  stuff.forEach((setting) => {
-    blockData[setting.key] = setting.value
-  })
 
   if (blockProps.name === "shopwp/cart-icon") {
     var queryParams = false

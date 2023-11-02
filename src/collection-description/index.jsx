@@ -9,7 +9,10 @@ function registerBlockCollectionDescription() {
         "This block allows you to add a single collection description by itself",
       category: "shopwp-collections",
       blockType: "collections",
-      defaultSettings: shopwp.collections,
+      defaultSettings: {
+        excludes: ["image", "title", "products"],
+      },
+      singleCollectionComponent: true,
       supports: {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,

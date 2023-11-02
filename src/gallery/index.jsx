@@ -6,6 +6,10 @@ function registerBlockGallery() {
     register({
       title: shopwp.t.l.images,
       description: shopwp.t.a.blockImagesDesc,
+      defaultSettings: {
+        excludes: ["buy-button", "description", "pricing", "title"],
+      },
+      singleProductComponent: true,
       supports: {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,

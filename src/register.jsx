@@ -6,6 +6,20 @@ import BlockProvider from "./_state/provider"
 const queryClient = new QueryClient()
 
 function register(settings) {
+  if (settings.singleProductComponent) {
+    var defaults = {
+      ...shopwp.products,
+      ...settings.defaultSettings,
+    }
+  } else if (settings.singleCollectionComponent) {
+    var defaults = {
+      ...shopwp.collections,
+      ...settings.defaultSettings,
+    }
+  } else {
+    var defaults = settings.defaultSettings
+  }
+
   return {
     title: settings.title,
     description: settings.description,
@@ -25,9 +39,7 @@ function register(settings) {
       },
       defaultSettings: {
         type: "object",
-        default: settings?.defaultSettings
-          ? settings.defaultSettings
-          : shopwp.products,
+        default: defaults,
       },
       layoutType: {
         type: "string",

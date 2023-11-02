@@ -6,6 +6,10 @@ function registerBlockTitle() {
     register({
       title: shopwp.t.l.title,
       description: shopwp.t.a.blockTitleDesc,
+      defaultSettings: {
+        excludes: ["buy-button", "description", "pricing", "images"],
+      },
+      singleProductComponent: true,
       supports: {
         multiple: shopwp.misc.postType === "shopwp_shortcodes" ? false : true,
         reusable: false,
