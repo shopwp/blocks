@@ -10,7 +10,7 @@ function registerBlockCollectionDescription() {
       category: "shopwp-collections",
       blockType: "collections",
       defaultSettings: {
-        excludes: ["image", "title", "products"],
+        collectionsExcludes: ["image", "title", "products"],
       },
       singleCollectionComponent: true,
       supports: {
