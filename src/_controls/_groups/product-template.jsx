@@ -10,7 +10,7 @@ function ProductTemplateControls({ settings, dispatch, translations }) {
         help={translations.a.templateHelp}
         defaultState={
           isBase64(settings.htmlTemplateData)
-            ? atob(settings.htmlTemplateData)
+            ? decodeURI(atob(settings.htmlTemplateData))
             : settings.htmlTemplateData
         }
         rows={15}

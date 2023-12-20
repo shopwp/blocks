@@ -30,7 +30,7 @@ function TextAreaDebounced({
       if (debouncedValue) {
         dispatch({
           type: "UPDATE_SETTING",
-          payload: { key: settingName, value: btoa(debouncedValue) },
+          payload: { key: settingName, value: btoa(encodeURI(debouncedValue)) },
         })
       } else {
         dispatch({
