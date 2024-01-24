@@ -67,6 +67,18 @@ function FilteringControls({
         />
       ) : null}
       {!single && !forCollection ? (
+        <FilterTextControl
+          name="productId"
+          label={translations.a.filterById}
+          help={translations.a.filterByIdHelp}
+          state={settings.productId}
+          isLoading={isLoading}
+          collection={settings.collection}
+          settings={settings}
+          dispatch={dispatch}
+        />
+      ) : null}
+      {!single && !forCollection ? (
         <Radio
           name="availableForSale"
           label={translations.l.availSale}

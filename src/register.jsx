@@ -1,9 +1,7 @@
 import BlockRoot from "./_content/root"
 import BlockWrapper from "./_content/wrapper"
 import Icon from "./_icons"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import BlockProvider from "./_state/provider"
-const queryClient = new QueryClient()
 
 function register(settings) {
   if (settings.singleProductComponent) {
@@ -76,11 +74,9 @@ function register(settings) {
           style={{ width: "100%", height: "auto" }}
         />
       ) : (
-        <QueryClientProvider client={queryClient}>
-          <BlockProvider blockProps={props}>
-            <BlockWrapper blockProps={props} />
-          </BlockProvider>
-        </QueryClientProvider>
+        <BlockProvider blockProps={props}>
+          <BlockWrapper blockProps={props} />
+        </BlockProvider>
       )
     },
     save: (props) => {
