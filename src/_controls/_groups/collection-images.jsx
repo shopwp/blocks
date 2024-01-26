@@ -37,7 +37,7 @@ function CollectionImagesControls({ settings, dispatch, translations }) {
       <Select
         name="collectionsImagesSizingCrop"
         label={translations.a.imageCropPos}
-        help={translations.a.imageCropPosHelp}
+        help={translations.a.cropHelp}
         options={cropOptions(translations)}
         settings={settings}
         dispatch={dispatch}
@@ -46,8 +46,8 @@ function CollectionImagesControls({ settings, dispatch, translations }) {
 
       <Select
         name="collectionsImagesSizingScale"
-        label={translations.a.imageCropPos}
-        help={translations.a.imageCropPosHelp}
+        label={translations.a.imageSizing}
+        help={translations.a.imageSizingHelp}
         options={scaleOptions(translations)}
         settings={settings}
         dispatch={dispatch}

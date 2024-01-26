@@ -121,7 +121,7 @@ function ProductImagesControls({ settings, dispatch, translations }) {
       <Select
         name="imagesSizingCrop"
         label={translations.a.imageCropPos}
-        help={translations.a.imageCropPosHelp}
+        help={translations.a.cropHelp}
         options={cropOptions(translations)}
         settings={settings}
         dispatch={dispatch}
@@ -130,8 +130,8 @@ function ProductImagesControls({ settings, dispatch, translations }) {
 
       <Select
         name="imagesSizingScale"
-        label={translations.a.imageCropPos}
-        help={translations.a.imageCropPosHelp}
+        label={translations.a.imageSizing}
+        help={translations.a.imageSizingHelp}
         options={scaleOptions(translations)}
         settings={settings}
         dispatch={dispatch}
@@ -167,7 +167,7 @@ function ProductImagesControls({ settings, dispatch, translations }) {
       <Select
         name="thumbnailImagesSizingCrop"
         label={translations.a.imageCropPos}
-        help={translations.a.imageCropPosHelp}
+        help={translations.a.cropHelp}
         options={cropOptions(translations)}
         settings={settings}
         dispatch={dispatch}
@@ -177,8 +177,8 @@ function ProductImagesControls({ settings, dispatch, translations }) {
       <Select
         name="thumbnailImagesSizingScale"
         label={translations.a.imageScale}
-        help={translations.a.imageScaleHelp}
-        options={cropOptions(translations)}
+        help={translations.a.imageSizingHelp}
+        options={scaleOptions(translations)}
         settings={settings}
         dispatch={dispatch}
         disabled={settings.thumbnailImagesSizingToggle === false}
