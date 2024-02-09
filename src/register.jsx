@@ -61,13 +61,6 @@ function register(settings) {
       },
     },
     edit: (props) => {
-      const { useEffect } = wp.element
-      const { setAttributes, clientId, name } = props
-
-      useEffect(() => {
-        setAttributes({ clientId: clientId, name: name })
-      }, [clientId])
-
       return props.attributes.preview ? (
         <img
           src={props.attributes.preview}
@@ -75,7 +68,7 @@ function register(settings) {
         />
       ) : (
         <BlockProvider blockProps={props}>
-          <BlockWrapper blockProps={props} />
+          <BlockWrapper blockName={props.name} />
         </BlockProvider>
       )
     },

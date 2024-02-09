@@ -9,19 +9,19 @@ import {
 
 import Controls from "./controls"
 
-function BlockWrapper({ blockProps }) {
+function BlockWrapper({ blockName }) {
   return (
     <>
-      <Controls name={blockProps.name} />
+      <Controls name={blockName} />
 
       <BlockContent>
-        {blockProps.name.includes("shopwp/collection") ? (
+        {blockName.includes("shopwp/collection") ? (
           <Collections />
-        ) : blockProps.name.includes("shopwp/storefront") ? (
+        ) : blockName.includes("shopwp/storefront") ? (
           <Storefront />
-        ) : blockProps.name.includes("shopwp/cart-icon") ? (
+        ) : blockName.includes("shopwp/cart-icon") ? (
           <CartIcon />
-        ) : blockProps.name.includes("shopwp/search") ? (
+        ) : blockName.includes("shopwp/search") ? (
           <Search />
         ) : (
           <Products />

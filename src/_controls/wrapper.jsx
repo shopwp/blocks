@@ -215,6 +215,7 @@ function ControlsWrapper({ children }) {
 
     blockState.blockProps.setAttributes({
       settingsId: newSettingsId,
+      clientId: blockState.blockProps.clientId,
     })
   }, [blockState.settings])
 

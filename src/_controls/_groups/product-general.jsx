@@ -7,6 +7,7 @@ function ProductGeneralControls({ settings, dispatch, translations }) {
         name="linkTo"
         label={translations.a.shouldLinkTo}
         help={translations.a.shouldLinkToHelp}
+        disabled={settings.directCheckout}
         options={[
           { label: "WordPress", value: "wordpress" },
           { label: "Shopify", value: "shopify" },
@@ -19,8 +20,7 @@ function ProductGeneralControls({ settings, dispatch, translations }) {
 
       <Select
         name="linkTarget"
-        label={translations.a.shouldLinkTo}
-        help={translations.a.linksShouldOpenIn}
+        label={translations.a.linksShouldOpenIn}
         options={[
           {
             label: translations.a.currentTab,

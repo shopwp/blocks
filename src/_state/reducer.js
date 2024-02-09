@@ -236,29 +236,11 @@ function BlockReducer(state, action) {
         $set: queryParamObject,
       })
 
-      var settingsId = encodeSettings(newSettings)
-
-      if (settingsId instanceof Error) {
-        wp.data
-          .dispatch("core/notices")
-          .createNotice("error", shopwp.t.e.badChars, {
-            id: "shopwp-bad-chars",
-          })
-        return {
-          ...state,
-        }
-      } else {
-        if (state.blockProps.attributes.layoutType !== "shortcode") {
-          wp.data.dispatch("core/notices").removeNotice("shopwp-bad-chars")
-        }
-
-        return {
-          ...state,
-          queryParams: okqueryParamObject,
-          settings: newSettings,
-          settingsId: settingsId,
-          notice: false,
-        }
+      return {
+        ...state,
+        queryParams: okqueryParamObject,
+        settings: newSettings,
+        notice: false,
       }
     }
 
@@ -313,6 +295,10 @@ function BlockReducer(state, action) {
 
     case "SET_COLLECTION_TITLES": {
       return rSet("collectionTitles", action, state)
+    }
+
+    case "SET_COMPONENT_ELEMENT": {
+      return rSet("componentElement", action, state)
     }
 
     default: {
