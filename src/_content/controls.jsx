@@ -22,7 +22,7 @@ function Controls({ name }) {
       ) : name === "shopwp/storefront" ? (
         <ProductsControls />
       ) : name === "shopwp/search" ? (
-        <SearchControls />
+        <ProductsControls />
       ) : name === "shopwp/title" ? (
         <TitleControls />
       ) : name === "shopwp/pricing" ? (
