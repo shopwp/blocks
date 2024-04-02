@@ -3,16 +3,28 @@ import { encodeSettings, decodeSettings } from "@shopwp/common"
 function getSavedBlockSettings(defaultSettings, settingsId) {
   var decodedAppliedSettings = decodeSettings(settingsId)
 
-  var allSettings = {
-    ...defaultSettings,
-    ...decodedAppliedSettings,
-  }
+  if (decodedAppliedSettings instanceof Error) {
+    console.error(decodedAppliedSettings.message)
+    return [defaultSettings, settingsId]
+  } else {
+    var allSettings = {
+      ...defaultSettings,
+      ...decodedAppliedSettings,
+    }
 
-  return [allSettings, settingsId]
+    return [allSettings, settingsId]
+  }
 }
 
 function getDefaultBlockSettings(defaultSettings) {
-  return [defaultSettings, encodeSettings(defaultSettings)]
+  let encoded = encodeSettings(defaultSettings)
+
+  if (encoded instanceof Error) {
+    console.error(encoded.message)
+    return false
+  } else {
+    return [defaultSettings, encoded]
+  }
 }
 
 function getBlockSettings(settingsId, defaultSettings) {

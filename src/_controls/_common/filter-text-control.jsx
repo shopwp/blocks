@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { convertValuesToString, removeEmptyValues } from "./"
+import { convertValuesToString } from "./"
 import { useDebounce } from "@shopwp/hooks"
+import { convertStringSelectionToArray } from "@shopwp/common"
 import { fetchPostById } from "@shopwp/api"
 
 function FilterTextControl({
@@ -82,7 +83,7 @@ function FilterTextControl({
       return
     }
 
-    var values = removeEmptyValues(localVal)
+    var values = convertStringSelectionToArray(localVal)
 
     if (name === "postId") {
       var newActualNuim = parseInt(debouncedValue)

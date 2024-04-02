@@ -23,20 +23,4 @@ function convertValuesToString(vals) {
   }
 }
 
-function splitSelection(string) {
-  return string.split(",")
-}
-
-function removeEmptyValues(stringSelection) {
-  if (stringSelection === "") {
-    return false
-  }
-
-  var stuff = compact(splitSelection(stringSelection))
-
-  var final = stuff.map((val) => val.trim())
-
-  return compact(final)
-}
-
-export { defaultColors, removeEmptyValues, convertValuesToString }
+export { defaultColors, convertValuesToString }

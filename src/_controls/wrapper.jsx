@@ -10,8 +10,8 @@ function ControlsWrapper({ children }) {
   const blockDispatch = useBlockDispatch()
   const blockState = useBlockState()
   const isFirstRender = useRef(true)
-  const onBeforePayloadUpdate = useAction("on.beforePayloadUpdate", null)
-  const onAfterPayloadUpdate = useAction("on.afterPayloadUpdate", null)
+  const onBeforePayloadUpdate = useAction("on.beforePayloadUpdate")
+  const onAfterPayloadUpdate = useAction("on.afterPayloadUpdate")
 
   const [layoutType, setLayoutType] = useState(
     blockState.blockProps.attributes.layoutType
@@ -209,7 +209,7 @@ function ControlsWrapper({ children }) {
     var newSettingsId = encodeSettings(settings)
 
     if (newSettingsId instanceof Error) {
-      console.error("ShopWP Error: ", newSettingsId)
+      console.error(newSettingsId.message)
       return
     }
 
