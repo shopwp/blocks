@@ -73,7 +73,7 @@ function FilterTextControl({
         payload: { key: "productId", value: post.meta.product_id },
       })
     } catch (error) {
-      console.error("ShopWP Error: ", error)
+      console.error(error)
     }
   }
 
