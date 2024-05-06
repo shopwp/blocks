@@ -25,6 +25,7 @@ function FilteringControls({
       {!single && !forCollection ? (
         <FilterTextControl
           name="collection"
+          collection={settings.collection}
           label={translations.a.filterByCollection}
           help={translations.a.filterByCollectionHelp}
           isLoading={isLoading}

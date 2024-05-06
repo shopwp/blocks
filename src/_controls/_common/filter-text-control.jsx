@@ -93,7 +93,59 @@ function FilterTextControl({
 
       fetchPostData(newActualNuim)
     } else {
-      if (name === "collection" && values.length) {
+      if (name === "collection") {
+        // User clear out any collections values, reset to products query
+        if (!values.length) {
+          dispatch({
+            type: "SET_QUERY_TYPE",
+            payload: "products",
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "collection", value: false },
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "sortBy", value: "title" },
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "tag", value: false },
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "vendor", value: false },
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "productType", value: false },
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "title", value: false },
+          })
+
+          dispatch({
+            type: "SET_COLLECTION_TITLES",
+            payload: false,
+          })
+
+          return
+        }
+
+        if (!collection) {
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: "sortBy", value: "title" },
+          })
+        }
+
         dispatch({
           type: "SET_QUERY_TYPE",
           payload: "collectionProducts",
@@ -123,22 +175,29 @@ function FilterTextControl({
           type: "UPDATE_SETTING",
           payload: { key: "title", value: false },
         })
+
+        dispatch({
+          type: "UPDATE_SETTING",
+          payload: { key: name, value: values },
+        })
       } else {
-        dispatch({
-          type: "SET_QUERY_TYPE",
-          payload: "products",
-        })
+        if (!collection) {
+          dispatch({
+            type: "SET_QUERY_TYPE",
+            payload: "products",
+          })
 
-        dispatch({
-          type: "SET_COLLECTION_TITLES",
-          payload: false,
-        })
+          dispatch({
+            type: "SET_COLLECTION_TITLES",
+            payload: false,
+          })
+
+          dispatch({
+            type: "UPDATE_SETTING",
+            payload: { key: name, value: values },
+          })
+        }
       }
-
-      dispatch({
-        type: "UPDATE_SETTING",
-        payload: { key: name, value: values },
-      })
     }
   }, [debouncedValue])
 

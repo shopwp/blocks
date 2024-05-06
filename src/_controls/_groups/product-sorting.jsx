@@ -6,7 +6,7 @@ function ProductSortingControls({
   translations,
   isFromCollection,
 }) {
-  var sortingOptions = [
+  var sortingOptionsProducts = [
     { label: translations.l.title, value: "title" },
     { label: translations.l.vendor, value: "vendor" },
     { label: "ID", value: "id" },
@@ -29,12 +29,26 @@ function ProductSortingControls({
     },
   ]
 
-  if (isFromCollection) {
-    sortingOptions.push({
+  var sortingOptionsCollections = [
+    { label: translations.l.title, value: "title" },
+    {
       label: translations.l.collectionDefault,
       value: "collection_default",
-    })
-  }
+    },
+    {
+      label: translations.l.collectionManual,
+      value: "manual",
+    },
+    {
+      label: translations.a.createdAt,
+      value: "created",
+    },
+    {
+      label: translations.l.bestSelling,
+      value: "best_selling",
+    },
+    { label: translations.l.price, value: "price" },
+  ]
 
   return (
     <>
@@ -42,7 +56,9 @@ function ProductSortingControls({
         name="sortBy"
         label={translations.l.sort}
         help={translations.a.sortHelp}
-        options={sortingOptions}
+        options={
+          isFromCollection ? sortingOptionsCollections : sortingOptionsProducts
+        }
         settings={settings}
         dispatch={dispatch}
       />
