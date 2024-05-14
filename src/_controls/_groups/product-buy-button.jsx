@@ -140,6 +140,13 @@ function ProductBuyButtonControls({ settings, dispatch, translations }) {
         settings={settings}
         dispatch={dispatch}
       />
+
+      <Toggle
+        name="showPriceUnderVariantButton"
+        label={translations.a.showPriceInsideVariant}
+        settings={settings}
+        dispatch={dispatch}
+      />
     </>
   )
 }
