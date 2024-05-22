@@ -47,6 +47,12 @@ function register(settings) {
         type: "string",
         default: settings?.blockType ? settings.blockType : "products",
       },
+      forceDefaultsWhenEmpty: {
+        type: "string",
+        default: settings?.forceDefaultsWhenEmpty
+          ? settings.forceDefaultsWhenEmpty
+          : false,
+      },
       clientId: {
         type: "string",
         default: "",

@@ -11,6 +11,7 @@ export { default as registerBlockCollectionImage } from "./src/collection-image"
 export { default as registerBlockStorefront } from "./src/storefront"
 export { default as registerBlockCartIcon } from "./src/cart-icon"
 export { default as registerBlockSearch } from "./src/search"
+export { default as registerBlockReviews } from "./src/reviews"
 export { default as Icon } from "./src/_icons"
 
 export { useBlockState, useBlockDispatch } from "./src/_state/hooks"

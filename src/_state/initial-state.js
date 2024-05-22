@@ -32,6 +32,7 @@ function getBlockSettings(settingsId, defaultSettings) {
   if (settingsId) {
     return getSavedBlockSettings(defaultSettings, settingsId)
   }
+
   return getDefaultBlockSettings(defaultSettings)
 }
 
@@ -46,7 +47,10 @@ function BlockInitialState({ blockProps }) {
     blockProps.attributes.defaultSettings
   )
 
-  if (blockProps.name === "shopwp/cart-icon") {
+  if (
+    blockProps.name === "shopwp/cart-icon" ||
+    blockProps.name === "shopwp/reviews"
+  ) {
     var queryParams = false
   } else {
     if (

@@ -10,6 +10,7 @@ import CollectionImageControls from "../collection-image/controls"
 import CollectionDescriptionControls from "../collection-description/controls"
 import CartIconControls from "../cart-icon/controls"
 import BuyButtonControls from "../buy-button/controls"
+import ReviewsControls from "../reviews/controls"
 import ControlsWrapper from "../_controls/wrapper"
 
 function Controls({ name }) {
@@ -41,6 +42,8 @@ function Controls({ name }) {
         <CollectionDescriptionControls />
       ) : name === "shopwp/cart-icon" ? (
         <CartIconControls />
+      ) : name === "shopwp/reviews" ? (
+        <ReviewsControls />
       ) : null}
     </ControlsWrapper>
   )

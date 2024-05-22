@@ -1,5 +1,9 @@
 import { useBlockState, useBlockDispatch } from "@shopwp/blocks"
-import { encodeSettings, compareSettings } from "@shopwp/common"
+import {
+  encodeSettings,
+  compareSettings,
+  forceDefaultsWhenEmpty,
+} from "@shopwp/common"
 import { useAction } from "@shopwp/hooks"
 
 function ControlsWrapper({ children }) {
@@ -196,17 +200,16 @@ function ControlsWrapper({ children }) {
       blockState.defaultSettings
     )
 
+    // Empty object: {}
     if (!settings || Object.keys(settings).length === 0) {
-      settings = {
-        excludes: blockState.defaultSettings.excludes,
-      }
+      var newSettingsId = encodeSettings(blockState.defaultSettings)
     } else {
-      if (!settings.excludes) {
-        settings.excludes = blockState.defaultSettings.excludes
+      if (blockState.blockProps.attributes.forceDefaultsWhenEmpty) {
+        settings = forceDefaultsWhenEmpty(settings, blockState.defaultSettings)
       }
-    }
 
-    var newSettingsId = encodeSettings(settings)
+      var newSettingsId = encodeSettings(settings)
+    }
 
     if (newSettingsId instanceof Error) {
       console.error(newSettingsId.message)

@@ -5,6 +5,7 @@ import {
   Storefront,
   CartIcon,
   Search,
+  Reviews,
 } from "@shopwp/components"
 
 import Controls from "./controls"
@@ -23,6 +24,8 @@ function BlockWrapper({ blockName }) {
           <CartIcon />
         ) : blockName.includes("shopwp/search") ? (
           <Search />
+        ) : blockName.includes("shopwp/reviews") ? (
+          <Reviews />
         ) : (
           <Products />
         )}

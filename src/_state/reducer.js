@@ -1,4 +1,4 @@
-import { encodeSettings, buildQueryStringFromSelections } from "@shopwp/common"
+import { buildQueryStringFromSelections } from "@shopwp/common"
 import update from "immutability-helper"
 import { rSet, rErr } from "@shopwp/common"
 
@@ -71,7 +71,7 @@ function buildQueryFromSelections(settings, blockType) {
     }
   }
 
-  return buildQueryStringFromSelections(selections, settings)
+  return buildQueryStringFromSelections(selections, settings, blockType)
 }
 
 function findQueryParamToUpdate(
