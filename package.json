@@ -1,11 +1,10 @@
 {
   "name": "@shopwp/blocks",
   "sideEffects": false,
-  "version": "8.9.17",
+  "version": "8.9.18",
   "description": "Gutenberg Blocks for ShopWP.",
   "main": "index.js",
   "type": "module",
-  "private": true,
   "scripts": {
     "build": "webpack --config webpack.config.babel.js",
     "tests": "jest --watch --maxWorkers=25%"
