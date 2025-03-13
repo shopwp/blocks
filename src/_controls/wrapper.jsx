@@ -128,6 +128,8 @@ function ControlsWrapper({ children }) {
 
   Should only run if using the layout builder
 
+  This runs when we change layout type and post preview
+
   */
   useEffect(() => {
     if (!entityRecordEdits || Object.keys(entityRecordEdits).length === 0) {
@@ -143,7 +145,7 @@ function ControlsWrapper({ children }) {
       blockDispatch({
         type: "UPDATE_SETTING",
         payload: {
-          key: "collectionId",
+          key: "collectionsId",
           value: false,
         },
       })
@@ -163,8 +165,8 @@ function ControlsWrapper({ children }) {
       blockDispatch({
         type: "UPDATE_SETTING",
         payload: {
-          key: "collectionId",
-          value: entityRecordEdits.meta.layout_preview_collection_id.toString(),
+          key: "collectionsId",
+          value: [entityRecordEdits.meta.layout_preview_collection_id],
         },
       })
 
@@ -182,7 +184,7 @@ function ControlsWrapper({ children }) {
           type: "UPDATE_SETTING",
           payload: {
             key: "productId",
-            value: entityRecordEdits.meta.layout_preview_product_id.toString(),
+            value: entityRecordEdits.meta.layout_preview_product_id,
           },
         })
       }
@@ -195,7 +197,7 @@ function ControlsWrapper({ children }) {
 
   */
   useEffect(() => {
-    var settings = compareSettings(
+    const settings = compareSettings(
       blockState.settings,
       blockState.defaultSettings
     )
@@ -222,7 +224,11 @@ function ControlsWrapper({ children }) {
       settingsId: newSettingsId,
       clientId: blockState.blockProps.clientId,
     })
-  }, [blockState.settings])
+  }, [
+    blockState.settings,
+    blockState.blockProps,
+    blockState.blockProps.clientId,
+  ])
 
   return (
     <InspectorControls>

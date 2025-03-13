@@ -13,7 +13,7 @@ function BlockContent({ children }) {
   const { useEffect, useState } = wp.element
   const blockState = useBlockState()
 
-  const [ely, setEly] = useState(false)
+  const [element, setElement] = useState(false)
 
   const select = wp.data.select,
     subscribe = wp.data.subscribe
@@ -32,27 +32,27 @@ function BlockContent({ children }) {
     })
   }
 
-  async function boom() {
+  async function run() {
     await whenEditorIsReady()
 
-    var eleee = document.getElementById(
+    const element = document.getElementById(
       "block-" + blockState.blockProps.clientId
     )
 
-    setEly(eleee)
+    setElement(element)
   }
 
   useEffect(() => {
-    boom()
+    run()
   }, [])
 
   return (
     <Shop>
-      {ely
+      {element
         ? wp.element.cloneElement(children, {
             settings: blockState.settings,
             id: blockState.blockProps.clientId,
-            element: ely,
+            element: element,
             queryParams: blockState.queryParams,
             queryType: blockState.queryType,
             skeletonType: blockState.blockProps.name,

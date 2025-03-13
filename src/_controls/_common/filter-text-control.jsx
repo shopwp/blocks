@@ -20,7 +20,7 @@ function FilterTextControl({
   const { useEffect, useState, useRef } = wp.element
   const { TextControl, Spinner } = wp.components
   const [localVal, setLocalVal] = useState(valsToString)
-  const debouncedValue = useDebounce(localVal, 350)
+  const debouncedValue = useDebounce(localVal, 550)
   const isFirstRender = useRef(true)
   const [isTouched, setIsTouched] = useState(false)
 
@@ -56,11 +56,6 @@ function FilterTextControl({
       dispatch({
         type: "SET_QUERY_TYPE",
         payload: "products",
-      })
-
-      dispatch({
-        type: "SET_COLLECTION_TITLES",
-        payload: false,
       })
 
       dispatch({
@@ -131,11 +126,6 @@ function FilterTextControl({
             payload: { key: "title", value: false },
           })
 
-          dispatch({
-            type: "SET_COLLECTION_TITLES",
-            payload: false,
-          })
-
           return
         }
 
@@ -149,11 +139,6 @@ function FilterTextControl({
         dispatch({
           type: "SET_QUERY_TYPE",
           payload: "collectionProducts",
-        })
-
-        dispatch({
-          type: "SET_COLLECTION_TITLES",
-          payload: values[0],
         })
 
         dispatch({
@@ -181,22 +166,10 @@ function FilterTextControl({
           payload: { key: name, value: values },
         })
       } else {
-        if (!collection) {
-          dispatch({
-            type: "SET_QUERY_TYPE",
-            payload: "products",
-          })
-
-          dispatch({
-            type: "SET_COLLECTION_TITLES",
-            payload: false,
-          })
-
-          dispatch({
-            type: "UPDATE_SETTING",
-            payload: { key: name, value: values },
-          })
-        }
+        dispatch({
+          type: "UPDATE_SETTING",
+          payload: { key: name, value: values },
+        })
       }
     }
   }, [debouncedValue])

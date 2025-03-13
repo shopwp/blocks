@@ -78,7 +78,6 @@ function BlockInitialState({ blockProps }) {
       }
 
       var queryType = "collections"
-      var collectionTitles = false
       blockData.collection = false
     } else {
       if (blockData.limit && blockData.limit < blockData.pageSize) {
@@ -98,9 +97,8 @@ function BlockInitialState({ blockProps }) {
         country: shopwp.general.countryCode.toUpperCase(),
         language: shopwp.general.languageCode.toUpperCase(),
       }
-
+      // TODO: this is impportant. rethink how we're setting this. if a collection is passed in, a different graphql query is ran
       var queryType = blockData.collection ? "collectionProducts" : "products"
-      var collectionTitles = blockData.collection ? blockData.collection : false
     }
   }
 
@@ -114,14 +112,9 @@ function BlockInitialState({ blockProps }) {
     settings: blockData,
     isFirstRender: blockProps.attributes.isFirstRender,
     defaultSettings: blockProps.attributes.defaultSettings,
-    payload: [],
     queryParams: queryParams,
     originalQueryParams: queryParams,
     queryType: queryType,
-    collectionTitles: collectionTitles,
-    hasNextPage: false,
-    totalShown: 0,
-    isFetchingNext: false,
     t: wp.hooks.applyFilters("shop.textContent", shopwp.t),
   }
 }

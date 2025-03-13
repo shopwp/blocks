@@ -18,7 +18,7 @@ function querySettings() {
     "collectionsPageSize",
     "collectionsLimit",
     "collectionsSortBy",
-    "collectionId",
+    "collectionsId",
     "pageSize",
     "sortBy",
     "reverse",
@@ -32,21 +32,23 @@ function changedQuerySetting(key) {
 
 function buildQueryFromSelections(settings, blockType) {
   var selections = {}
-
   if (blockType === "collections") {
     if (settings.collectionsTitle) {
       selections.titles = settings.collectionsTitle
       selections.collection = false
-      selections.id = settings.collectionId
+      selections.id = settings.collectionsId
     } else {
       selections.titles = false
-      selections.id = settings.collectionId
+      selections.id = settings.collectionsId
     }
 
     selections.tags = false
     selections.vendors = false
     selections.types = false
-    selections.available_for_sale = false
+
+    if (settings.collectionsExcludes.includes("products")) {
+      delete selections.available_for_sale
+    }
     // selections.id = false
   } else {
     selections.titles = settings.title
@@ -66,12 +68,14 @@ function buildQueryFromSelections(settings, blockType) {
 
     if (settings.productId) {
       selections.id = settings.productId
-    } else if (settings.collectionId) {
-      selections.id = settings.collectionId
+    } else if (settings.collectionsId) {
+      selections.id = settings.collectionsId
     }
   }
 
-  return buildQueryStringFromSelections(selections, settings, blockType)
+  var query = buildQueryStringFromSelections(selections, settings, blockType)
+
+  return query
 }
 
 function findQueryParamToUpdate(
@@ -248,17 +252,6 @@ function BlockReducer(state, action) {
       return rSet("notice", action, state)
     }
 
-    case "SET_PAYLOAD": {
-      return rSet("payload", action, state)
-    }
-
-    case "APPEND_PAYLOAD": {
-      return {
-        ...state,
-        payload: update(state.payload, { $push: action.payload }),
-      }
-    }
-
     case "SET_QUERY_TYPE": {
       return rSet("queryType", action, state)
     }
@@ -267,34 +260,8 @@ function BlockReducer(state, action) {
       return rSet("isLoading", action, state)
     }
 
-    case "SET_CURSOR": {
-      return {
-        ...state,
-        cursor: update(state.cursor, {
-          $set: action.payload,
-        }),
-      }
-    }
-
-    case "UPDATE_TOTAL_SHOWN": {
-      const newTotal = action.payload + state.totalShown
-
-      return {
-        ...state,
-        totalShown: update(state.totalShown, { $set: newTotal }),
-      }
-    }
-
-    case "SET_HAS_NEXT_PAGE": {
-      return rSet("hasNextPage", action, state)
-    }
-
     case "SET_HAS_PREVIOUS_PAGE": {
       return rSet("hasPreviousPage", action, state)
-    }
-
-    case "SET_COLLECTION_TITLES": {
-      return rSet("collectionTitles", action, state)
     }
 
     case "SET_COMPONENT_ELEMENT": {

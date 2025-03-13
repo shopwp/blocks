@@ -1,5 +1,4 @@
 import TitleControls from "../title/controls"
-import SearchControls from "../search/controls"
 import ProductsControls from "../products/controls"
 import PricingControls from "../pricing/controls"
 import GalleryControls from "../gallery/controls"
